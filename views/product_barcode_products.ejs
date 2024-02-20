@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head'); -%>
+
+</head>
+
+<body onload="dateview()">
+    <!--*******************
+    Preloader start
+********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+    Preloader end
+********************-->
+
+    <!--**********************************
+    Main wrapper start
+***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+        Nav header start
+    ***********************************-->
+        <%- include('./partials/header_logo'); -%>
+
+            <!--**********************************
+        Nav header end
+    ***********************************-->
+
+            <!--**********************************
+        Header start
+    ***********************************-->
+            <%- include('./partials/header',{titel: language.manage_product}); -%>
+
+                <!--**********************************
+        Header end ti-comment-alt
+    ***********************************-->
+
+                <!--**********************************
+        Sidebar start
+    ***********************************-->
+                <%- include('./partials/sidebar'); -%>
+
+                    <!--**********************************
+        Sidebar end
+    ***********************************-->
+
+                    <div class="content-body">
+                        <div class="container-fluid">
+                            <!-- row -->
+                            
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title col-6 "><%= language.all_products %></h4>
+                                    </div>
+
+                                    <!-- <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <select style="width: 150px;" class="form-control" id="product_category" >
+                                                    <option value="rm">Raw Materials</option>
+                                                    <option value="fg">Finished Goods</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="col-lg-4">
+                                                <select style="width: 150px;" class="form-control" id="product_identity">
+                                                    <option value="Brands">Brands</option>
+                                                    <option value="Category">Category</option>
+                                                </select>
+                                            </div>
+
+
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <select  style="width: 150px;" class="form-control" id="selected_data">
+                                                    
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <button style="width: 150px;" type="button" class="btn btn-rounded btn-info" id="Searchbut">
+                                                            Search
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div> -->
+                                    
+
+                                    <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <select style="width: 150px;" class="form-control" id="product_category">
+                                                    <option value="rm">Raw Materials</option>
+                                                    <option value="fg">Finished Goods</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="col-lg-4">
+                                                <select style="width: 150px;" class="form-control" id="product_identity">
+                                                    <!-- <option value="all">All</option> -->
+                                                    <option value="Brands">Brands</option>
+                                                    <option value="Category">Category</option>
+                                                </select>
+                                            </div>
+                                    
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <select style="width: 150px;" class="form-control" id="selected_data">
+                                                            <!-- Add options here if needed -->
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2"> <!-- Adding margin-top for separation -->
+                                                    <div class="col-lg-12">
+                                                        <button style="width: 150px;" type="button" class="btn btn-rounded btn-info" id="Searchbut">
+                                                            Search
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <button type="button" id="printAll" class="btn btn-success">Print All</button>
+                                    </div>
+                                    
+                                    
+
+                                    <div class="card-body">
+                                        
+                                        <div class="table-responsive">
+                                            <table id="data_barcode">
+                                                <thead>
+                                                    <tr>
+
+                                                       
+                                                        <th>Item Description</th>
+                                                        <th>Primary Barcode</th>
+                                                        <th>Secondary Barcode</th>
+                                                        <th>Product Barcode</th>
+                                                        <th>Number of Copies</th>
+                                                        <th> </th>
+                                                    </tr>
+                                                </thead>
+                                               
+                                            </table>
+                                        </div>
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                
+
+                    <!--**********************************
+            Footer start
+        ***********************************-->
+                    <%- include('./partials/footer'); -%>
+
+                        <!--**********************************
+            Footer end
+        ***********************************-->
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!-- start Toastr -->
+    <%- include('./partials/toastr'); -%>
+    <!-- End Toastr -->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+   
+    <%- include('./partials/script'); -%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.3/JsBarcode.all.min.js"></script>
+    <script>
+
+
+        function dateview() {
+            var dataProdCat = $('#product_category').val();
+                var dataProdIdentity = $('#product_identity').val();
+                var select_data = $('#selected_data');
+
+                $.ajax({
+                    url: '/products/barcode_filter',
+                    type: 'POST',
+                    data: { dataProdCat, dataProdIdentity },
+                    success: function(response) {
+                        
+
+                        select_data.empty();
+                        var option = $('<option>').text("All").val("All").attr('dataShow', "All");
+                        select_data.append(option);
+                        $.each(response, function(index, data) {
+                            var datashow = data._id;
+                            option = $('<option>').text(datashow).val(datashow).attr('dataShow', datashow);
+                            select_data.append(option);
+                        })
+                    }
+                });
+        }
+    
+        $(document).ready(function () {
+            $("#data_barcode").DataTable({
+                paging: true,
+                select: true,
+                "order": [[0, "desc"]],
+                dom: 'Bfrtip',
+
+
+                buttons: [
+                    'pageLength',
+                ],
+
+                "ajax": {
+                    "url": "/products/barcode_data",
+                    "type": "POST",
+                    "datatype": "json",
+                    
+                },
+
+
+                "columns": [
+                    { "data": "name", "name": "name" },
+                    { 
+                        // "data": "primary_code", "name": "primary_code"
+                        data: "primary_code", "name": "primary_code", render: function (data, type, row) {
+                            return '<svg id="primary_code_' + data + '"></svg>';
+                        }
+                    },
+                    { 
+                        // "data": "secondary_code", "name": "secondary_code"
+                        data: "secondary_code", "name": "secondary_code", render: function (data, type, row) {
+                        
+
+                            if(row.secondary_code == "NA"){
+                                
+                                return '<svg id="secondary_code_' + row._id + '"></svg>';
+                            }else{
+                                return '<svg id="secondary_code_' + row._id + '"></svg>';
+                            }
+                            
+                        }
+                    },
+                    { 
+                        // "data": "secondary_code", "name": "secondary_code"
+                        data: "product_code", "name": "product_code", render: function (data, type, row) {
+                   
+
+                            if(row.product_code == "NA"){
+                                
+                                return '<svg id="product_code_' + row._id + '"></svg>';
+                            }else{
+                                return '<svg id="product_code_' + row._id + '"></svg>';
+                            }
+                            
+                        }
+                    },
+                    {
+                    
+                        data: "_id", "name": "_id", render: function (data, type, row) {
+                        
+                            return "<input type='number' class='form-control' name='no_copies' id='no_copies' value=''>";
+                        }
+                    },
+                    {
+                            data: "_id", "name": "_id", render: function (data, type, row) {
+                                return '<button type="button" class="btn btn-success">Print</button>';
+                            }
+                    },
+                ],
+
+                "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]]
+            });
+
+            $("#data_barcode").on('draw.dt', function () {
+                // Iterate over each row to render JsBarcode
+                $('#data_barcode tbody tr').each(function () {
+                    var row = $(this).closest('tr');
+                    var data = $("#data_barcode").DataTable().row(row).data();
+                    var barcodeId = 'primary_code_' + data.primary_code;
+                    var secid = 'secondary_code_' + data._id;
+                    var product_codeid = 'product_code_' + data._id;
+                    // Render JsBarcode for each row
+                    JsBarcode("#" + barcodeId, data.primary_code);
+                    JsBarcode("#" + secid, data.secondary_code);
+                    JsBarcode("#" + product_codeid, data.product_code);
+                });
+            });
+
+            $('#product_category').change(function() {
+                dateview();
+            })
+
+
+            $('#product_identity').change(function() {
+                dateview();
+            })
+            
+            $('#Searchbut').click(function() {
+                var dataProdCat = $('#product_category').val();
+                var dataProdIdentity = $('#product_identity').val();
+                var select_data = $('#selected_data').val();
+
+
+                $.ajax({
+                    url: "/products/print_barcode_filter",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "prod_cat": dataProdCat, "identity": dataProdIdentity, "valueData" : select_data },
+                    success: function(response) {
+                        // console.log(response)
+
+                        var table = $("#data_barcode").DataTable();
+
+                        if (table !== 'undefined') {
+                            table.destroy();
+                        }
+
+
+                        $("#data_barcode").DataTable({
+                            paging: true,
+                            select: true,
+                            "order": [[0, "desc"]],
+                            dom: 'Bfrtip',
+                            buttons: ['pageLength'],
+                            "data": response,
+                            "columns": [
+                                { "data": "name", "name": "name" },
+                                { 
+                                    data: "primary_code", "name": "primary_code", render: function (data, type, row) {
+                                        return '<svg id="primary_code_' + data + '"></svg>';
+                                    }
+                                },
+                                { 
+                                    data: "secondary_code", "name": "secondary_code", render: function (data, type, row) {
+                                        if(row.secondary_code == "NA"){
+                                            return '<svg id="secondary_code_' + row._id + '"></svg>';
+                                        } else {
+                                            return '<svg id="secondary_code_' + row._id + '"></svg>';
+                                        }
+                                    }
+                                },
+                                { 
+                                    data: "product_code", "name": "product_code", render: function (data, type, row) {
+                                        if(row.product_code == "NA"){
+                                            return '<svg id="product_code_' + row._id + '"></svg>';
+                                        } else {
+                                            return '<svg id="product_code_' + row._id + '"></svg>';
+                                        }
+                                    }
+                                },
+                                {
+                                    data: "_id", "name": "_id", render: function (data, type, row) {
+                                        return "<input type='number' class='form-control' name='no_copies' id='no_copies' value=''>";
+                                    }
+                                },
+                                {
+                                    data: "_id", "name": "_id", render: function (data, type, row) {
+                                        return '<button type="button" class="btn btn-success">Print</button>';
+                                    }
+                                },
+                            ],
+                            "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]]
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                    }
+
+
+                    
+                });
+
+                $("#data_barcode").on('draw.dt', function () {
+                // Iterate over each row to render JsBarcode
+                $('#data_barcode tbody tr').each(function () {
+                    var row = $(this).closest('tr');
+                    var data = $("#data_barcode").DataTable().row(row).data();
+                    var barcodeId = 'primary_code_' + data.primary_code;
+                    var secid = 'secondary_code_' + data._id;
+                    var product_codeid = 'product_code_' + data._id;
+                    // Render JsBarcode for each row
+                    JsBarcode("#" + barcodeId, data.primary_code);
+                    JsBarcode("#" + secid, data.secondary_code);
+                    JsBarcode("#" + product_codeid, data.product_code);
+                });
+            });
+
+        
+            
+
+
+            })
+
+            $('#printAll').click(function(){
+                var dataProdCat = $('#product_category').val();
+                var dataProdIdentity = $('#product_identity').val();
+                var select_data = $('#selected_data').val();
+                $.ajax({
+                    url: "/products/print_barcode_filter",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "prod_cat": dataProdCat, "identity": dataProdIdentity, "valueData" : select_data },
+                    success: function(response) {
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                    }
+                    
+                });
+
+            })
+        
+        });
+
+
+        function generatePDF(barcodeValue) {
+      // Create a document definition
+      var docDefinition = {
+        content: [
+          { text: 'Barcode PDF', fontSize: 16, margin: [0, 0, 0, 10] },
+          {
+            canvas: [
+              // Create a canvas to embed barcode
+              {
+                type: 'rect',
+                x: 0,
+                y: 0,
+                w: 1,
+                h: 1,
+                r: 0,
+                lineColor: 'black',
+                lineWidth: 1
+              }
+            ],
+            margin: [0, 0, 0, 10]
+          }
+        ]
+      };
+
+      // Generate barcode
+      JsBarcode("#canvas", barcodeValue, {
+        format: "CODE128",
+        displayValue: true
+      });
+
+      // Generate PDF
+      pdfMake.createPdf(docDefinition).open();
+    }
+    </script>
+
+        <!--**********************************
+        Scripts end
+    ***********************************-->
+</body>
+
+</html>
