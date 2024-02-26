@@ -101,67 +101,23 @@
                                     <div class="card-header">
                                         <div class="card-title col-6 text-center" style="margin: 0 auto;">
                                             <div style="display: flex; justify-content: center; align-items: center;">
-                                                <!-- First Dropdown -->
+                                                <select class="form-control" id="data_category" onchange="showSelected()">
+                                                    <option value="Raw Materials">Raw Materials</option>
+                                                    <option value="Finished Goods">Finished Goods</option>
+                                                </select>
                                                 <select class="form-control" id="data_choosing" onchange="showSelected()">
-                                                    <option value="prod_categ">Products Category</option>
                                                     <option value="brands">Brands</option>
                                                     <option value="categ">Category</option>
-                                                    <!-- Add more options as needed -->
                                                 </select>
-                                            
-                                                <!-- Second Dropdown -->
                                                 <select class="form-control" id="data_selected">
-                                                    
                                                 </select>
                                             </div>
-                                        
-                                            <!-- Search Button -->
                                             <button type="button" class="btn btn-rounded btn-info" id="Searchbut">
                                                 Search
                                             </button>
                                         </div>
                                     </div>
-                                    
-                                    
-                                    
 
-
-                                    <!-- <div class="card-header">
-                                        
-                                        <div class="card-title col-12 text-center">
-                                            
-                   
-                                            
-                                            <button type="button" class="btn btn-rounded btn-info"
-                                                data-toggle="modal" data-target="#exampleModal">
-                                                Search
-                                            </button>
-                                            
-                                            
-
-                                        </div>
-                                    </div> -->
-                                    <!--<div class="card-header">-->
-                                        
-                                    <!--    <div class="card-title col-12 text-end">-->
-                                    <!--        <form class="needs-validation" action="/products/products_import_migrate_file" method="post" enctype="multipart/form-data">-->
-                                    <!--            <input class="d-none" type="file" id="file-1" name="migrate_product_fule" required>-->
-                                    <!--        <div class="d-flex align-items-end">-->
-                                    <!--            <label class="btn btn-rounded btn-info text-white" id="migrate_product_fule" for="file-1">Upload Migration File</label>-->
-                                    <!--        </div>-->
-                                            
-                                    <!--        <div class="text-end">-->
-                                    <!--                        <button class="btn btn-primary mt-4 w-25" type="submit"><%= language.submit %></button>-->
-                                    <!--                    </div>-->
-                                    <!--        </form>-->
-                                            
-                                            
-                                            
-
-                                    <!--    </div>-->
-                                    <!--</div>-->
-                                    
-                                    
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table id="example" class="table table-responsive-sm">
@@ -309,12 +265,13 @@
     <script>
         function showSelected(){
             var datachoose = document.getElementById("data_choosing").value;
+            var data_cateory = $('#data_category').val();
             var selectRoom = $('#data_selected');
 
             $.ajax({
                 url: '/products/select_data', 
                 method: 'POST',
-                data: { datachoose }, 
+                data: { data_cateory, datachoose }, 
                 success: function(response) {
 
                 
@@ -344,6 +301,7 @@
             Swal.showLoading()
         }
         $('#Searchbut').click(function(){
+            var data_cateory = $('#data_category').val();
             var data_choosing = $('#data_choosing').val();
             var data_selected = $('#data_selected').val();
 

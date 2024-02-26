@@ -584,8 +584,6 @@
                                                                         <th scope="col">Item Code </th>
                                                                         <th scope="col">Item Description </th>
                                                                         <th scope="col">Primary Barcode </th>
-                                                                        
-                                                                        <!-- <th scope="col">Secondary code </th> -->
                                                                         <th scope="col">Batch Code</th>
                                                                         <th scope="col">Production date</th>
                                                                         <th scope="col">Expiry date </th>
@@ -647,25 +645,7 @@
                           </div>
                           <div class="modal-body">
 
-                            <!-- <div>
-                                <span style="color:black;">Document Number: <b><%= invoice %></b></span>
-                            </div>
-                            <div>
-                                <span style="color:black;">Supplier/Client Ref Number: <b id="SRNC"></b></span>
-                            </div>
-
-                            <div>
-                                <span style="color:black;">Customer: <b id="customers"></b></span>
-                            </div>
-                            <div>
-                                <span style="color:black;">Date received: <b id="dateRec"></b></span>
-                            </div>
-                            <div>
-                                <span style="color:black;">Warehouse: <b id="houseware"></b></span>
-                            </div>
-                            <div>
-                                <span style="color:black;">Room: <b id="moor"></b></span>
-                            </div> -->
+      
 
                         <table style="width:50%" >
                             <thead>
@@ -762,36 +742,7 @@
         $('#date').attr('max', maxDate);
     });
 
-    // function SelectRoom(){
-        
-    //     var varibale = document.getElementById("warehouse_name").value;
-    //     var selectRoom = $('#room');
 
-    //     $.ajax({
-    //         url: '/warehousemap_Income/Rooms_data', 
-    //         method: 'POST',
-    //         data: { warehouse_name: varibale }, 
-    //         success: function(response) {
-
-            
-    //             selectRoom.empty();
-    //                 $.each(response, function(index, data) {
-    //                     var roomName = data.room_name;
-    //                     var roomCode = data.room_name
-    //                     var option = $('<option>').text(roomName).val(roomName).attr('roomcode', roomCode);;
-    //                     selectRoom.append(option);
-
-    //                     BayBin()
-    //                 })
-
-
-                
-    //         }
-    //     })
-
-        
-        
-    // }
 
     function SelectRoom() {
         var variable = document.getElementById("warehouse_name").value;

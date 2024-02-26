@@ -135,7 +135,41 @@
                                             </div>
                                             
                                         </div>
-                                        <button type="button" id="printAll" class="btn btn-success">Print All</button>
+                                        
+                                       
+                                        
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <!-- <div class="col-lg-4 offset-lg-7">
+                                            <select class='form-control' id='typeofbarcode'>
+                                                <option value='1'>Primary Code</option>
+                                                <option value='2'>Secondary Code</option>
+                                                <option value='3'>Product Code</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-0 offset-lg-11">
+                                        
+                                      
+                                            <button type="button" id="printAll" class="btn btn-success">Print All</button>
+                                        </div> -->
+
+                                        <div class="row">
+                                            <div class="col-sm-4 offset-lg-7">
+                                                <select class='form-control' id='typeofbarcode'>
+                                                    <option value='1'>Primary Code</option>
+                                                    <option value='2'>Secondary Code</option>
+                                                    <option value='3'>Product Code</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <button type="button" id="printAll" class="btn btn-success">Print All</button>
+                                            </div>
+                                        </div>
+
+                                        
+
                                     </div>
                                     
                                     
@@ -152,6 +186,7 @@
                                                         <th>Primary Barcode</th>
                                                         <th>Secondary Barcode</th>
                                                         <th>Product Barcode</th>
+                                                        <th>Type of Barcode</th>
                                                         <th>Number of Copies</th>
                                                         <th> </th>
                                                     </tr>
@@ -192,6 +227,8 @@
     ***********************************-->
    
     <%- include('./partials/script'); -%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.3/JsBarcode.all.min.js"></script>
     <script>
 
@@ -280,12 +317,21 @@
                     
                         data: "_id", "name": "_id", render: function (data, type, row) {
                         
-                            return "<input type='number' class='form-control' name='no_copies' id='no_copies' value=''>";
+                            return "<select class='form-control' id='typeofbarcode"+data+"'> <option value='1'>Primary Code</option> <option value='2'>Secondary Code</option> <option value='3'>Product Code</option></select>";
+                        }
+                    },
+                    {
+                    
+                        data: "_id", "name": "_id", render: function (data, type, row) {
+                        
+                            return "<input type='number' class='form-control' name='no_copies' id='no_copies"+data+"' value=''>";
                         }
                     },
                     {
                             data: "_id", "name": "_id", render: function (data, type, row) {
-                                return '<button type="button" class="btn btn-success">Print</button>';
+                                // return '<button type="button" class="btn btn-success" onclick="print_single("'+data+'")"> Print <> '+data+'</button>';
+                                return '<button type="button" class="btn btn-success" onclick="print_single(\'' + data + '\')"> Print</button>';
+
                             }
                     },
                 ],
@@ -324,7 +370,7 @@
 
 
                 $.ajax({
-                    url: "/products/print_barcode_filter",
+                    url: "/products/print_barcode_filter_search",
                     type: "POST",
                     dataType: "json",
                     data: { "prod_cat": dataProdCat, "identity": dataProdIdentity, "valueData" : select_data },
@@ -417,12 +463,27 @@
                 var dataProdCat = $('#product_category').val();
                 var dataProdIdentity = $('#product_identity').val();
                 var select_data = $('#selected_data').val();
+                var typeofbarcode = $('#typeofbarcode').val();
                 $.ajax({
                     url: "/products/print_barcode_filter",
                     type: "POST",
                     dataType: "json",
-                    data: { "prod_cat": dataProdCat, "identity": dataProdIdentity, "valueData" : select_data },
+                    data: { "prod_cat": dataProdCat, "identity": dataProdIdentity, "valueData" : select_data, "typeofbarcode" : typeofbarcode },
                     success: function(response) {
+
+                        const pdfData = atob(response.pdfContent);
+                        const arrayBuffer = new ArrayBuffer(pdfData.length);
+                        const uint8Array = new Uint8Array(arrayBuffer);
+                        for (let i = 0; i < pdfData.length; i++) {
+                            uint8Array[i] = pdfData.charCodeAt(i);
+                        }
+                        const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
+
+                        // Create a Blob URL for the PDF
+                        const url = URL.createObjectURL(blob);
+
+                        // Open PDF in a new tab
+                        window.open(url, '_blank');
                         
                     },
                     error: function(xhr, status, error) {
@@ -436,40 +497,46 @@
         });
 
 
-        function generatePDF(barcodeValue) {
-      // Create a document definition
-      var docDefinition = {
-        content: [
-          { text: 'Barcode PDF', fontSize: 16, margin: [0, 0, 0, 10] },
-          {
-            canvas: [
-              // Create a canvas to embed barcode
-              {
-                type: 'rect',
-                x: 0,
-                y: 0,
-                w: 1,
-                h: 1,
-                r: 0,
-                lineColor: 'black',
-                lineWidth: 1
-              }
-            ],
-            margin: [0, 0, 0, 10]
-          }
-        ]
-      };
 
-      // Generate barcode
-      JsBarcode("#canvas", barcodeValue, {
-        format: "CODE128",
-        displayValue: true
-      });
+        function print_single(id){
+            var copiesInput  = document.getElementById("no_copies"+id).value;
+            var typeofbarcode = document.getElementById("typeofbarcode"+id).value;
+            var copies = parseInt(copiesInput.trim()) ?? 0;
+            if (isNaN(copies) || copies == 0) {
+                copies = 1; 
+            }
+            // alert(typeofbarcode)
+            $.ajax({
+                    url: "/products/print_barcode_single/"+id,
+                    type: "POST",
+                    dataType: "json",
+                    data: { "copies": copies, "typeofbarcode": typeofbarcode},
+                    success: function(response) {
 
-      // Generate PDF
-      pdfMake.createPdf(docDefinition).open();
-    }
-    </script>
+                        const pdfData = atob(response.pdfContent);
+                        const arrayBuffer = new ArrayBuffer(pdfData.length);
+                        const uint8Array = new Uint8Array(arrayBuffer);
+                        for (let i = 0; i < pdfData.length; i++) {
+                            uint8Array[i] = pdfData.charCodeAt(i);
+                        }
+                        const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
+
+                        // Create a Blob URL for the PDF
+                        const url = URL.createObjectURL(blob);
+
+                        // Open PDF in a new tab
+                        window.open(url, '_blank');
+                        
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                    }
+                    
+                });
+
+            
+        }
+        </script>
 
         <!--**********************************
         Scripts end
