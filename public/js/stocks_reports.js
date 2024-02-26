@@ -232,6 +232,8 @@ function LogicDropdown(){
                 dataItem +='<th><h5>Production Date</h5></th>';
                 dataItem +='<th><h5>Expiry Date</h5></th>';
                 dataItem +='<th><h5>Stock Quantity</h5></th>';
+                dataItem +='<th><h5>Actual Quantity</h5></th>';
+                dataItem +='<th><h5>Actual UNIT OF MEASURE</h5></th>';
                 dataItem +='<th><h5>Bin Location</h5></th>';
                 dataItem +='</tr>';
                 dataItem +='</thead>';
@@ -268,6 +270,9 @@ function LogicDropdown(){
                     var SndUOM = element.product_details.secondary_unit !== undefined ? element.product_details.secondary_unit :"";
                     var BatchCodes = element.product_details.batch_code !== undefined ? element.product_details.batch_code :"";
 
+                    var actual_qty = element.product_details.actual_qty !== undefined ? element.product_details.actual_qty :"";
+                    var actual_uom = element.product_details.actual_uom !== undefined ? element.product_details.actual_uom :"";
+
                 
                     dataItem +='<tr>';
                     dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_cat+'</h5></td>';
@@ -283,6 +288,8 @@ function LogicDropdown(){
                     dataItem +='<td class="text-nowrap"><h5>'+ productiondate +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ expirydate +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ element.product_details.product_stock +'</h5></td>';
+                    dataItem +='<td class="text-nowrap"><h5>'+ actual_qty +'</h5></td>';
+                    dataItem +='<td class="text-nowrap"><h5>'+ actual_uom +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ binlocation +'</h5></td>';
                     dataItem +='</tr>';
                     

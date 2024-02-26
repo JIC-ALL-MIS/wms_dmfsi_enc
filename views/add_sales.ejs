@@ -657,6 +657,8 @@
                                                                         <th scope="col"><%= language.quantity %> <span class="text-red">*</span></th>
                                                                         <!-- <th scope="col">Actual <%= language.quantity %></th> -->
                                                                         <th scope="col">Unit of Measure </th>
+                                                                        <th scope="col">Actual <%= language.quantity %></th>
+                                                                        <th scope="col">Actual Unit of Measure</th>
                                                                         <th scope="col">Conversion </th>
                                                                         <th scope="col">Room Assign </th>
                                                                         <th scope="col"> Location</th>
@@ -1307,6 +1309,8 @@ function checkExpiration(expirationDate, x) {
                     row.append($('<td>').html('<input type="text" class="form-control" style="width: 80px;" name="quantity" id="quantity'+x+'" onkeyup="ConversionKit('+x+','+data2.maxPerUnit+')" value="">'));
                     // row.append($('<td>').html('<input type="text" class="form-control" style="width: 80px;" name="actual_qty" id="actual_qty'+x+'" value="'+ data2.actual_qty +'">'));
                     row.append($('<td>').html('<input type="text" class="form-control" style="width: 130px;" name="unitodmeasure" value="' + theUnit + '" readonly>'));
+                    row.append($('<td>').html('<input type="text" class="form-control" style="width: 80px;" name="actual_qty" id="actual_qty'+x+'" value="'+ data2.actual_qty +'">'));
+                    row.append($('<td>').html('<input type="text" class="form-control" style="width: 80px;" name="actual_uom" id="actual_uom'+x+'" value="'+ data2.actual_uom +'">'));
                     row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="test" id="Conver'+x+'" value="" readonly>'));
                         
                     row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="RoomAssigned" id="RoomAssigned'+x+'" value="'+data2.roomNamed+'" readonly>'));

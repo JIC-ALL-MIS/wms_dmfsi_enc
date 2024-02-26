@@ -603,8 +603,9 @@
                                                                         <th scope="col">Production date </th>
                                                                         <th scope="col">Expiry date </th>
                                                                         <th scope="col"><%= language.quantity %></th>
-                                                                        <!-- <th scope="col">Actual <%= language.quantity %></th> -->
                                                                         <th scope="col">Unit of Measure </th>
+                                                                        <th scope="col">Actual <%= language.quantity %></th>
+                                                                        <th scope="col">Actual Unit of Measure</th>
                                                                         <th scope="col">Conversion</th>
                                                                         <th scope="col">Assign Room</th>
                                                                         <th scope="col">Type </th>
@@ -1785,8 +1786,12 @@
                             row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="production_date" id="production_date'+lastIncre+'" value="" required>'));
                             row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="expiry_date" id="expiry_date'+lastIncre+'" value="" required>'));
                             row.append($('<td>').html('<input type="number" class="form-control" style="width: 150px;" name="prod_qty" data-prodqty="prod_qty'+lastIncre+'" id="prod_qty'+ data.product_code +'" onchange="ValidationForMaxQTY('+ data.product_code +')" onkeyup="ConversionKit('+lastIncre+', '+data.maxProdPerUnit+')" value="" required>'));
-                            // row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="actual_qty" id="actual_qty'+lastIncre+'"  value="">'));
+                            
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="prod_unit" id="prod_unit'+lastIncre+'"  value="' + data.unit + '" readonly>'));
+                            row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="actual_qty" id="actual_qty'+lastIncre+'"  value="">'));
+                            row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="actual_uom" id="actual_uom'+lastIncre+'"  value="">'));
+
+
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="test" id="Conver'+lastIncre+'" value="" readonly>'));
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="RoomAssign" id="RoomAssign'+lastIncre+'" value="'+RoomAssign+'" readonly>'));
                             // row.append($('<td>').html('<select class="form-control" name="type" level="type'+lastIncre+'" id="type' + lastIncre + '" style="width: 150px;" onchange="BayBin('+lastIncre+', \"'+RoomAssign+'\")"><option value="L">Level</option><option value="F">Floor</option></select>'));
