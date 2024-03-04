@@ -75,6 +75,11 @@
                                 <option value="AJ">Adjustment</option>
                                 <option value="TF">Transfer</option>
                             </select>
+                            <select class="form-control" id="warehouse" name="warehouse">
+                               <% dataProcess.forEach(item => { %>
+                                    <option value="<%= item._id %>"><%= item._id %></option>
+                                <% }); %>
+                            </select>
                             <input class="form-control" type="date" name="transaction_date_from" id="transaction_date_from">
                             <input class="form-control" type="date" name="transaction_date_to" id="transaction_date_to">
                             <button class="btn btn-rounded btn-info text-white" id="btnFilter">Filter</button>
@@ -87,18 +92,22 @@
                                 <table id="dataTable" class="table table-responsive-sm text-center">
                                     <thead>
                                         <tr>
-
+                                            <th>Warehouse</th>
                                             <th>Document Number</th>
                                             <th><%= language.date %></th>
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <!-- <tbody>
-                                   
-                                    </tbody> -->
+                                    <!-- <tbody></tbody> -->
 
                                 </table>
                             </div>
+
+
+                          
+                                <!-- <button class="btn btn-info float-right" id="barcode_print1" onclick="printDiv()">
+                                <i class="fas fa-print"></i> Print
+                                </button> -->
                         </div>
                     </div>
                 </div>
@@ -139,6 +148,7 @@
         $(document).ready(function() {
             $('#btnFilter').click(function() {
                 var product_category = $('#product_category').val();
+                var warehouse_category = $('#warehouse').val();
                 var transaction_category = $('#transaction_category').val();
                 var transaction_date_from = $('#transaction_date_from').val();
                 var transaction_date_to = $('#transaction_date_to').val();
@@ -148,7 +158,7 @@
                 $.ajax({
                     url: '/transaction_reports/reports',
                     type: 'POST',
-                    data: { product_category : product_category, transaction_category: transaction_category, transaction_date_from: transaction_date_from, transaction_date_to: transaction_date_to},
+                    data: { product_category : product_category, transaction_category: transaction_category, transaction_date_from: transaction_date_from, transaction_date_to: transaction_date_to, warehouse_category: warehouse_category},
                     success: function(response) {
                         console.log(response.data)
 
@@ -168,6 +178,7 @@
                             buttons: ['pageLength'],
                             "data": response.data,
                             "columns": [
+                                { "data": "warehouse_name", "name": "warehouse_name" },
                                 { "data": "invoice", "name": "invoice" },
                                 { "data": "date", "name": "date" },
                                 {
@@ -223,6 +234,9 @@
             }
             
         }
+    
+    
+        
     </script>
 </body>
 </html>

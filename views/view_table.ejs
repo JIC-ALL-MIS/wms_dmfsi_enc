@@ -69,7 +69,7 @@
                         
 
                         <div class="card-body">
-                            <div class="table-responsive print-size">
+                            <div class="table-responsive print-size" id="dataPrint">
                                 <table id="dataTable" class="table text-center">
                                     <thead class="thead-light">
                                         <tr>
@@ -110,6 +110,9 @@
 
                                 </table>
                             </div>
+                             <button class="btn btn-info float-right" id="barcode_print1" onclick="printDiv()">
+                                <i class="fas fa-print"></i> Print
+                                </button>
                         </div>
                     </div>
                 </div>
@@ -140,6 +143,32 @@
     ***********************************-->
    
 	<%- include('./partials/script'); -%>
+
+    <script>
+        function printDiv() {
+                var printContents = document.getElementById("dataPrint").innerHTML;
+        
+
+                var printWindow = window.open('', '_blank');
+            
+                printWindow.document.open();
+                printWindow.document.write('<html><head><title>Print</title> ');
+
+                printWindow.document.write('<link href="../../../vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">');
+                printWindow.document.write('<link href="../../../css/style2.css" rel="stylesheet"></link>');
+                
+                printWindow.document.write('</head><body>');
+                printWindow.document.write(printContents);
+                printWindow.document.write('</body></html>');
+                
+                printWindow.document.close();
+                setTimeout(function() {
+                    printWindow.print();
+                }, 1500); 
+
+        
+        }
+    </script>
 
 	<!--**********************************
         Scripts end
