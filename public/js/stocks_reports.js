@@ -287,7 +287,7 @@ function LogicDropdown(){
                     dataItem +='<td class="text-nowrap"><h5>'+ BatchCodes +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ productiondate +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ expirydate +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ element.product_details.product_stock +'</h5></td>';
+                    dataItem +='<td class="text-nowrap"><h5>'+ element.product_details.product_stock.toFixed(3); +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ actual_qty +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ actual_uom +'</h5></td>';
                     dataItem +='<td class="text-nowrap"><h5>'+ binlocation +'</h5></td>';
