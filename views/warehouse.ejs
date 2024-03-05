@@ -236,6 +236,12 @@
                                             <input type="text" class="form-control" id="edit-address"
                                                 value="<%= user.address %>" name="address" required>
 
+
+                                            <label for="recipient-name" class="col-form-label">Room<span class="text-red">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" id="edit-room"
+                                                placeholder="Room Name" value="<%= user.room %>" name="Room_name" required>
+
                                             <label class="form-label"><%= language.status %> <span class="text-red">*</span></label>
                                             <select class="form-control" name="status" id="category">
                                                 
@@ -246,7 +252,7 @@
 
                                             <div class="col-xl-3 col-sm-6">
                                                 <div class="form-group">
-                                                    <label for="invoice_no">Room  <span
+                                                    <label for="invoice_no">Warehouse Category<span
                                                             class="text-red">*</span></label>
                                                     <select class="form-control" name="rawfinished"
                                                         id="rawfinished" required>
@@ -258,44 +264,7 @@
                                                             <% }) %>
                                                     </select>
                                                 </div>
-                                            </div>
-    
-    
-                                            <div class="col-xl-3 col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="invoice_no">Room  <span
-                                                            class="text-red">*</span></label>
-                                                    <select class="form-control" name="category_name"
-                                                        id="category_name" required>
-                                                        <% vategory_data.forEach((cat)=> { %>
 
-                                                            <option <%=user.category==cat
-                                                            ? "selected" : "" %>>
-                                                                <%= cat %>
-                                                            </option>
-                                                            <% }) %>
-                                                    </select>
-                                                </div>
-                                            </div>
-    
-                                            
-                                            <div class="col-xl-3 col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="invoice_no">Room  <span
-                                                            class="text-red">*</span></label>
-                                                    <select class="form-control" name="Room_name"
-                                                        id="Room_name" required>
-                                                        <% rooms_data.forEach((rooms)=> { %>
-                                                            <option <%=user.room==rooms
-                                                            ? "selected" : "" %>>
-                                                                <%= rooms %>
-                                                            </option>
-                                                            <% }) %>
-                                                    </select>
-                                                </div>
-                                                
-                                                
-                                            </div>
 
                                         </div>
                                         <button type="submit" class="btn btn-primary w-100"><%= language.submit %> </button>
@@ -349,6 +318,7 @@
 
         $("#edit_form").attr('action', '/warehouse/view/' + dataId);
         $('#edit-name').attr('value', dataName);
+        $('#edit-room').attr('value', dataRoom);
         $('#edit-address').attr('value', dataAddress);
         $('#edit-email').attr('value', dataEmail);
         $('#edit-mobile').attr('value', dataMobile);
