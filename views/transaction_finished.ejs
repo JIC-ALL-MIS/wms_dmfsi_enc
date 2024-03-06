@@ -88,28 +88,13 @@
                         
                         
 
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="dataTable" class="table table-responsive-sm text-center">
-                                    <thead>
-                                        <tr>
-                                            <th>Warehouse</th>
-                                            <th>Document Number</th>
-                                            <th><%= language.date %></th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <!-- <tbody></tbody> -->
+                        <div class="card-body" id="dataProcess">
+                            
 
-                                </table>
-                            </div>
-
-
-                          
-                                <!-- <button class="btn btn-info float-right" id="barcode_print1" onclick="printDiv()">
-                                <i class="fas fa-print"></i> Print
-                                </button> -->
+                            
                         </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -153,46 +138,89 @@
                 var transaction_category = $('#transaction_category').val();
                 var transaction_date_from = $('#transaction_date_from').val();
                 var transaction_date_to = $('#transaction_date_to').val();
+                var item_code = $('#item_code').val();
                 
                 // console.log(product_category + " <> " + transaction_category + " <> " +  transaction_date_from +" <> "+ transaction_date_to)
 
                 $.ajax({
                     url: '/transaction_reports/reports',
                     type: 'POST',
-                    data: { product_category : product_category, transaction_category: transaction_category, transaction_date_from: transaction_date_from, transaction_date_to: transaction_date_to, warehouse_category: warehouse_category},
+                    data: { product_category : product_category, transaction_category: transaction_category, transaction_date_from: transaction_date_from, transaction_date_to: transaction_date_to, warehouse_category: warehouse_category, item_code : item_code},
                     success: function(response) {
                         console.log(response.data)
+                        const forData =  response.data;
+                        var dataProcess = document.getElementById("dataProcess");
+                        // var table = $("#dataTable").DataTable();
 
-                        var table = $("#dataTable").DataTable();
-
-                        if (table !== 'undefined') {
-                            table.destroy();
-                        }
+                        // if (table !== 'undefined') {
+                        //     table.destroy();
+                        // }
 
 
 
-                        $("#dataTable").DataTable({
-                            paging: true,
-                            select: true,
-                            "order": [[0, "desc"]],
-                            dom: 'Bfrtip',
-                            buttons: ['pageLength'],
-                            "data": response.data,
-                            "columns": [
-                                { "data": "warehouse_name", "name": "warehouse_name" },
-                                { "data": "invoice", "name": "invoice" },
-                                { "data": "date", "name": "date" },
-                                {
-                                    data: "_id", "name": "_id", render: function (data, type, row) {
+                        // $("#dataTable").DataTable({
+                        //     paging: true,
+                        //     select: true,
+                        //     "order": [[0, "desc"]],
+                        //     dom: 'Bfrtip',
+                        //     buttons: ['pageLength'],
+                        //     "data": response.data,
+                        //     "columns": [
+                        //         { "data": "warehouse_name", "name": "warehouse_name" },
+                        //         { "data": "invoice", "name": "invoice" },
+                        //         { "data": "date", "name": "date" },
+                        //         {
+                        //             data: "_id", "name": "_id", render: function (data, type, row) {
                                     
-                                        return '<button type="button" class="btn btn-success" onclick="view_detail(\'' + data + '\')"> View Details</button>';
+                        //                 return '<button type="button" class="btn btn-success" onclick="view_detail(\'' + data + '\')"> View Details</button>';
 
-                                    }
-                                },
-                            ],
-                            "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]]
+                        //             }
+                        //         },
+                        //     ],
+                        //     "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]]
+                        // });
+                        let dataString = "";
+                        forData.forEach(element => {
+                            dataString += "<h3>"+element._id+"</h3>"; 
+                            dataString += "<h3>"+element.warehouse_name+"</h3>"; 
+                            dataString += "<h3>"+element.date+"</h3>"; 
+
+                            dataString += "<div class='table-responsive'>"; 
+                            dataString += "<table id='dataTable' class='table table-responsive-lg text-center'>"; 
+                            dataString += "<thead>"; 
+                            dataString += "<tr>"; 
+                            dataString += "<th>Item Code</th>"; 
+                            dataString += "<th>Item Name</th>"; 
+                            dataString += "<th>Primary Code</th>"; 
+                            dataString += "<th>Secondary Code</th>"; 
+                            dataString += "<th>Production Date</th>"; 
+                            dataString += "<th>Expiry Date</th>"; 
+                            dataString += "<th>Quantity</th>"; 
+                            dataString += "<th>UOM</th>"; 
+                            dataString += "</tr>";
+                            dataString += "</thead>"; 
+                            dataString += "<tbody>"; 
+                                element.products.forEach( item => {
+                                    dataString += "<tr>"; 
+                                        dataString += "<td>" + item.product_code + "</td>"; 
+                                        dataString += "<td>" + item.product_name + "</td>"; 
+                                        dataString += "<td>" + item.primary_code + "</td>"; 3
+                                        dataString += "<td>" + item.secondary_code + "</td>"; 
+                                        dataString += "<td>" + item.production_date + "</td>"; 
+                                        dataString += "<td>" + item.expiry_date + "</td>"; 
+                                        dataString += "<td>" + item.quantity + "</td>"; 
+                                        dataString += "<td>" + item.standard_unit + "</td>"; 
+                                    dataString += "</tr>"; 
+                                })
+
+                                // console.log(element.product.product_code)
+                            dataString += "</tbody>"; 
+                            dataString += "</table>"; 
+                            dataString += "</div>"; 
                         });
-                        
+
+                        dataProcess.innerHTML = dataString;
+
                     }
                 })
             })

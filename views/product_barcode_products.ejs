@@ -258,12 +258,168 @@
         }
     
         $(document).ready(function () {
+
+            $('#Searchbut').click(function() {
+                var dataProdCat = $('#product_category').val();
+                var dataProdIdentity = $('#product_identity').val();
+                var select_data = $('#selected_data').val();
+
+
+                $.ajax({
+                    url: "/products/print_barcode_filter_search",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "prod_cat": dataProdCat, "identity": dataProdIdentity, "valueData" : select_data },
+                    success: function(response) {
+                        console.log(response)
+
+                        var table = $("#data_barcode").DataTable().destroy();
+                        // var table = document.getElementById("data_barcode");
+                        // var tbody = table.getElementsByTagName("tbody")[0];
+                        // if (typeof table !== 'undefined') {
+                        //     // table.remove();
+                        //     // tbody.innerHTML = "";
+                        // }
+
+
+                        Swal.fire({
+                            title: "Loading...",
+                            html: "Please wait a moment",
+                            allowOutsideClick: false, 
+                        })
+
+                        Swal.showLoading()
+
+                        $("#data_barcode").DataTable({
+                            paging: true,
+                            select: true,
+                            "order": [[0, "desc"]],
+
+                            dom: 'Bfrtip',
+
+                            buttons: ['pageLength'],
+
+                            "data": response.data,
+
+
+                            "columns": [
+                                { "data": "name", "name": "name" },
+                                { 
+                                    // "data": "primary_code", "name": "primary_code"
+                                    data: "primary_code", "name": "primary_code", render: function (data, type, row) {
+                                        console.log(data)
+                                        return '<svg id="primary_code_' + data + '"></svg>';
+                                    }
+                                },
+                                { 
+                                    // "data": "secondary_code", "name": "secondary_code"
+                                    data: "secondary_code", "name": "secondary_code", render: function (data, type, row) {
+                                    
+
+                                        if(row.secondary_code == "NA"){
+                                            
+                                            return '<svg id="secondary_code_' + row._id + '"></svg>';
+                                        }else{
+                                            return '<svg id="secondary_code_' + row._id + '"></svg>';
+                                        }
+                                        
+                                    }
+                                },
+                                { 
+                                    // "data": "secondary_code", "name": "secondary_code"
+                                    data: "product_code", "name": "product_code", render: function (data, type, row) {
+                            
+
+                                        if(row.product_code == "NA"){
+                                            
+                                            return '<svg id="product_code_' + row._id + '"></svg>';
+                                        }else{
+                                            return '<svg id="product_code_' + row._id + '"></svg>';
+                                        }
+                                        
+                                    }
+                                },
+                                {
+                                
+                                    data: "_id", "name": "_id", render: function (data, type, row) {
+                                    
+                                        return "<select class='form-control' id='typeofbarcode"+data+"'> <option value='1'>Primary Code</option> <option value='2'>Secondary Code</option> <option value='3'>Product Code</option></select>";
+                                    }
+                                },
+                                {
+                                
+                                    data: "_id", "name": "_id", render: function (data, type, row) {
+                                    
+                                        return "<input type='number' class='form-control' name='no_copies' id='no_copies"+data+"' value=''>";
+                                    }
+                                },
+                                {
+                                        data: "_id", "name": "_id", render: function (data, type, row) {
+                                            // return '<button type="button" class="btn btn-success" onclick="print_single("'+data+'")"> Print <> '+data+'</button>';
+                                            return '<button type="button" class="btn btn-success" onclick="print_single(\'' + data + '\')"> Print</button>';
+
+                                        }
+                                },
+                            ],
+
+                            
+                            "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]],
+                            "initComplete": function(settings, json) {
+                                Swal.close(); // Close Swal after DataTable initialization
+                            }
+                        });
+
+
+                //         $("#data_barcode").on('draw.dt', function () {
+                // // Iterate over each row to render JsBarcode
+                //             $('#data_barcode tbody tr').each(function () {
+                //                 var row = $(this).closest('tr');
+                //                 var data = $("#data_barcode").DataTable().row(row).data();
+                //                 var barcodeId = 'primary_code_' + data.primary_code;
+                //                 var secid = 'secondary_code_' + data._id;
+                //                 var product_codeid = 'product_code_' + data._id;
+                //                 // Render JsBarcode for each row
+                //                 JsBarcode("#" + barcodeId, data.primary_code);
+                //                 JsBarcode("#" + secid, data.secondary_code);
+                //                 JsBarcode("#" + product_codeid, data.product_code);
+                //             });
+                //         });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to load data: ' + error
+                        });
+                    }
+
+
+                    
+                });
+
+                
+
+        
+            
+
+
+            })
+
+
+
+            
+            Swal.fire({
+            title: "Loading...",
+            html: "Please wait a moment",
+            allowOutsideClick: false, 
+            })
+            Swal.showLoading()
             $("#data_barcode").DataTable({
                 paging: true,
                 select: true,
                 "order": [[0, "desc"]],
                 dom: 'Bfrtip',
-
+                
 
                 buttons: [
                     'pageLength',
@@ -336,8 +492,12 @@
                     },
                 ],
 
-                "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]]
+                "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]],
+                "initComplete": function(settings, json) {
+                    Swal.close(); // Close Swal after DataTable initialization
+                }
             });
+          
 
             $("#data_barcode").on('draw.dt', function () {
                 // Iterate over each row to render JsBarcode
@@ -363,102 +523,7 @@
                 dateview();
             })
             
-            $('#Searchbut').click(function() {
-                var dataProdCat = $('#product_category').val();
-                var dataProdIdentity = $('#product_identity').val();
-                var select_data = $('#selected_data').val();
-
-
-                $.ajax({
-                    url: "/products/print_barcode_filter_search",
-                    type: "POST",
-                    dataType: "json",
-                    data: { "prod_cat": dataProdCat, "identity": dataProdIdentity, "valueData" : select_data },
-                    success: function(response) {
-                        // console.log(response)
-
-                        var table = $("#data_barcode").DataTable();
-
-                        if (table !== 'undefined') {
-                            table.destroy();
-                        }
-
-
-                        $("#data_barcode").DataTable({
-                            paging: true,
-                            select: true,
-                            "order": [[0, "desc"]],
-                            dom: 'Bfrtip',
-                            buttons: ['pageLength'],
-                            "data": response,
-                            "columns": [
-                                { "data": "name", "name": "name" },
-                                { 
-                                    data: "primary_code", "name": "primary_code", render: function (data, type, row) {
-                                        return '<svg id="primary_code_' + data + '"></svg>';
-                                    }
-                                },
-                                { 
-                                    data: "secondary_code", "name": "secondary_code", render: function (data, type, row) {
-                                        if(row.secondary_code == "NA"){
-                                            return '<svg id="secondary_code_' + row._id + '"></svg>';
-                                        } else {
-                                            return '<svg id="secondary_code_' + row._id + '"></svg>';
-                                        }
-                                    }
-                                },
-                                { 
-                                    data: "product_code", "name": "product_code", render: function (data, type, row) {
-                                        if(row.product_code == "NA"){
-                                            return '<svg id="product_code_' + row._id + '"></svg>';
-                                        } else {
-                                            return '<svg id="product_code_' + row._id + '"></svg>';
-                                        }
-                                    }
-                                },
-                                {
-                                    data: "_id", "name": "_id", render: function (data, type, row) {
-                                        return "<input type='number' class='form-control' name='no_copies' id='no_copies' value=''>";
-                                    }
-                                },
-                                {
-                                    data: "_id", "name": "_id", render: function (data, type, row) {
-                                        return '<button type="button" class="btn btn-success">Print</button>';
-                                    }
-                                },
-                            ],
-                            "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]]
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle errors
-                    }
-
-
-                    
-                });
-
-                $("#data_barcode").on('draw.dt', function () {
-                // Iterate over each row to render JsBarcode
-                $('#data_barcode tbody tr').each(function () {
-                    var row = $(this).closest('tr');
-                    var data = $("#data_barcode").DataTable().row(row).data();
-                    var barcodeId = 'primary_code_' + data.primary_code;
-                    var secid = 'secondary_code_' + data._id;
-                    var product_codeid = 'product_code_' + data._id;
-                    // Render JsBarcode for each row
-                    JsBarcode("#" + barcodeId, data.primary_code);
-                    JsBarcode("#" + secid, data.secondary_code);
-                    JsBarcode("#" + product_codeid, data.product_code);
-                });
-            });
-
-        
-            
-
-
-            })
-
+  
             $('#printAll').click(function(){
                 var dataProdCat = $('#product_category').val();
                 var dataProdIdentity = $('#product_identity').val();
