@@ -1099,6 +1099,9 @@
                 case "Receiving Area":
                 type = ["Floor"];
                 break;
+                default : 
+                    type = ["Floor"]
+                break;
             }
 
                 var optionsHtml = '';
@@ -1125,6 +1128,9 @@
                 break;
                 case "Rack F":
                 type = ["Level"];
+                break;
+                default : 
+                    type = ["Floor"]
                 break;
             }
 
@@ -1254,9 +1260,20 @@
                     });
                 }
                 array.sort();
-
                 Location = array;
-                
+                break;
+
+                default:
+                    rack = [1];
+                    type = ["Floor"];
+                    var array = [];
+                    if(levelType.value == "Floor"){
+                        rack.forEach(element => {
+                            array.push('ALL' + element);
+                        });
+                    }
+                    array.sort();
+                    Location = array;
                 break;
             }
  
@@ -1458,7 +1475,6 @@
 
 
                 break;
-
                 case "Rack F":
                 levels = [1,2,3];
                 Isle = [1,2]; 
@@ -1481,6 +1497,18 @@
                 Location = array;
 
 
+                break;
+                default:
+                    rack = [1];
+                    type = ["Floor"];
+                    var array = [];
+                    if(levelType.value == "Floor"){
+                        rack.forEach(element => {
+                            array.push('ALL' + element);
+                        });
+                    }
+                    array.sort();
+                    Location = array;
                 break;
             }
             
