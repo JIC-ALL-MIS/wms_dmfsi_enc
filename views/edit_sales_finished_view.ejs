@@ -184,6 +184,7 @@
                                                                         <th scope="col"><%= language.quantity %> <span class="text-red">*</span></th>
                                                                         <th scope="col">Unit of Measure </th>
                                                                         <th scope="col">Conversion</th>
+                                                                        <th scope="col">Room</th>
                                                                         <th scope="col">Bin </th>
                                                        
                                                                         
@@ -254,10 +255,14 @@
                                                                             <!-- </td> -->
 
                                                                             <td class="align-top">
+                                                                                <input type="text" name="level" id="level" class="form-control level" style="width: 150px;" value="<%= user.room_name %>" readonly>
+                                                                            </td>
+
+                                                                            <td class="align-top">
                                                                                 <input type="text" name="level" id="level" class="form-control level" style="width: 150px;" value="<%= user.bay %>" readonly>
                                                                             </td>
 
-
+                                                                            <input type="hidden" name="invoice_data" id="invoice_data" class="form-control secondary_unit" style="width: 150px;" value="<%= user.invoice %>" readonly>
                                                                             <input type="hidden" name="prod_cat" id="prod_cat" class="form-control prod_cat" style="width: 150px;" value="<%= user.prod_cat %>" readonly>
                                                                             <input type="hidden" name="maxperunit" id="maxperunit" class="form-control maxperunit" style="width: 150px;" value="<%= user.maxperunit %>" readonly>
                                                                             <input type="hidden" name="primary_unit" id="primary_unit" class="form-control primary_unit" style="width: 150px;" value="<%= user.unit %>" readonly>
