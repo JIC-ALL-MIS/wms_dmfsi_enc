@@ -1287,6 +1287,17 @@
                             }).appendTo(row);
 
 
+                            $('<input>').attr({
+                                type: 'hidden',
+                                id: 'id_transaction_from'+lastIncre,
+                                name: 'id_transaction_from',
+                                value: data._id
+                            }).appendTo(row);
+
+
+
+                            
+
 
                             $('#tblPage_new').append(row);
                             BayBin(lastIncre, RoomAssign)
@@ -1396,6 +1407,13 @@
                                 id: 'prod_invoice'+lastIncre,
                                 name: 'prod_invoice',
                                 value: Invoice_num
+                            }).appendTo(row);
+
+                            $('<input>').attr({
+                                type: 'hidden',
+                                id: 'id_transaction_from'+lastIncre,
+                                name: 'id_transaction_from',
+                                value: data._id
                             }).appendTo(row);
 
 
