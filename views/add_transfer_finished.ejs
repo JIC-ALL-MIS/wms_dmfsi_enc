@@ -1490,6 +1490,13 @@
                             value: Invoice_num
                         }).appendTo(row);
 
+                        $('<input>').attr({
+                            type: 'hidden',
+                            id: 'id_transaction'+x,
+                            name: 'id_transaction',
+                            value: data._id
+                        }).appendTo(row);
+
 
                         
 

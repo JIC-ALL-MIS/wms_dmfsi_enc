@@ -204,8 +204,8 @@
                                                                         
                                                                         
                                                                         <% stock.forEach((stocks) => { %>
-                                                              
-                                                                                <% if(transfer1.product_name == stocks.name  &&  transfer1.from_bay == stocks.bay &&  transfer1.expiry_date == stocks.expiry_date && stocks.room == transfer1.from_room_name && transfer1.production_date == stocks.production_date && stocks.warehoue_name == transfer.from_warehouse) { %>
+                                                              <!-- <h3><%= " && "  + stocks.warehoue_name  + " == " + transfer1.from_warehouse %></h3> -->
+                                                                                <% if(transfer1.product_name == stocks.name  &&  transfer1.from_bay == stocks.bay &&  transfer1.expiry_date == stocks.expiry_date && stocks.room == transfer1.from_room_name && transfer1.production_date == stocks.production_date  && stocks._id == transfer1.id_transaction) { %>
                                                                                     <!-- <h3><%= transfer1.product_name + "==" + stocks.name  + "&&" +  transfer1.from_bay + "==" + stocks.bay + "&&" +  transfer1.expiry_date + "==" + stocks.expiry_date + "&&" + stocks.room + "==" + transfer1.from_room_name + "&&" + stocks.warehoue_name + "==" + transfer.from_warehouse %></h3> -->
                                                                                     <td class="align-top">
                                                                                         <input type="text" name="from_prod_qty"
