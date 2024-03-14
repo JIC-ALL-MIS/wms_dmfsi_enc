@@ -308,7 +308,7 @@
                                     // "data": "primary_code", "name": "primary_code"
                                     data: "primary_code", "name": "primary_code", render: function (data, type, row) {
                                         console.log(data)
-                                        return '<svg id="primary_code_' + data + '"></svg>';
+                                        return '<svg id="primary_code_' + data + '">'+data+'</svg>';
                                     }
                                 },
                                 { 
@@ -318,9 +318,9 @@
 
                                         if(row.secondary_code == "NA"){
                                             
-                                            return '<svg id="secondary_code_' + row._id + '"></svg>';
+                                            return '<svg id="secondary_code_' + row._id + '">NA</svg>';
                                         }else{
-                                            return '<svg id="secondary_code_' + row._id + '"></svg>';
+                                            return '<svg id="secondary_code_' + row._id + '">'+data+'</svg>';
                                         }
                                         
                                     }
@@ -332,9 +332,9 @@
 
                                         if(row.product_code == "NA"){
                                             
-                                            return '<svg id="product_code_' + row._id + '"></svg>';
+                                            return '<svg id="product_code_' + row._id + '">NA</svg>';
                                         }else{
-                                            return '<svg id="product_code_' + row._id + '"></svg>';
+                                            return '<svg id="product_code_' + row._id + '">'+data+'</svg>';
                                         }
                                         
                                     }
@@ -438,7 +438,7 @@
                     { 
                         // "data": "primary_code", "name": "primary_code"
                         data: "primary_code", "name": "primary_code", render: function (data, type, row) {
-                            return '<svg id="primary_code_' + data + '"></svg>';
+                            return '<svg id="primary_code_' + data + '">'+data+'</svg>';
                         }
                     },
                     { 
@@ -448,9 +448,9 @@
 
                             if(row.secondary_code == "NA"){
                                 
-                                return '<svg id="secondary_code_' + row._id + '"></svg>';
+                                return '<svg id="secondary_code_' + row._id + '">NA</svg>';
                             }else{
-                                return '<svg id="secondary_code_' + row._id + '"></svg>';
+                                return '<svg id="secondary_code_' + row._id + '">'+data+'</svg>';
                             }
                             
                         }
@@ -462,9 +462,9 @@
 
                             if(row.product_code == "NA"){
                                 
-                                return '<svg id="product_code_' + row._id + '"></svg>';
+                                return '<svg id="product_code_' + row._id + '">NA</svg>';
                             }else{
-                                return '<svg id="product_code_' + row._id + '"></svg>';
+                                return '<svg id="product_code_' + row._id + '">'+data+'</svg>';
                             }
                             
                         }
