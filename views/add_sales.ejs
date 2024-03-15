@@ -1403,6 +1403,14 @@ function checkExpiration(expirationDate, x) {
                         value: data2.invoice
                     }).appendTo(row);
 
+
+                    $('<input>').attr({
+                        type: 'hidden',
+                        id: 'id_transact'+x,
+                        name: 'id_transact',
+                        value: data2._id
+                    }).appendTo(row);
+
                     $('#tblPage_NewOut').append(row);
                     checkExpiration(data2.expiry_date, x);
                     x++;

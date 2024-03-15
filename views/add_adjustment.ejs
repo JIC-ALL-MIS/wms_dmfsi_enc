@@ -1319,6 +1319,14 @@
                             value: data.invoice
                         }).appendTo(row);
 
+
+                        $('<input>').attr({
+                            type: 'hidden',
+                            id: 'id_transaction'+x,
+                            name: 'id_transaction',
+                            value: data._id
+                        }).appendTo(row);
+
                             $('#tblPage_new').append(row);
 
                             
