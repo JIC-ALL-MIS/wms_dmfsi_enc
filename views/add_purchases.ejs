@@ -1139,7 +1139,20 @@
                      optionsHtml += '<option value="' + num + '">' + num + '</option>';
                 });
                 levelType.innerHTML = optionsHtml;
-            } 
+            } else{
+
+                switch(room){
+                    default : 
+                        type = ["Floor"]
+                    break;
+                }
+
+                var optionsHtml = '';
+                type.forEach(function (num) {
+                     optionsHtml += '<option value="' + num + '">' + num + '</option>';
+                });
+                levelType.innerHTML = optionsHtml;
+            }
     }
     function BayBin(x, room){
         var levelType = document.getElementById("type"+x);
@@ -1521,6 +1534,29 @@
 
 
             
+        }else{
+
+            switch(room){
+                default:
+                    rack = [1];
+                    type = ["Floor"];
+                    var array = [];
+                    if(levelType.value == "Floor"){
+                        rack.forEach(element => {
+                            array.push('ALL' + element);
+                        });
+                    }
+                    array.sort();
+                    Location = array;
+                break;
+            }
+
+            var optionsHtml = '';
+            Location.forEach(function (num) {
+                    optionsHtml += '<option value="' + num + '">' + num + '</option>';
+            });
+            selectlevel.innerHTML = optionsHtml; 
+        
         }
     }
 
