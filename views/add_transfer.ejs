@@ -1625,6 +1625,28 @@
                         Location = array;
                         
                         break;
+                        default:
+
+                            levels = [0];
+                            Isle = [0]; 
+                            rack = [1];
+                            type = ["Floor"];
+                            storage = ["D"];
+                            rak = ["R"];
+
+                            var array = [];
+
+                            var array = [];
+                            if(levelType.value == "Floor"){
+                                rack.forEach(element => {
+                                    array.push('ALL' + element);
+                                });
+                            }
+                            array.sort();
+
+                            Location = array;
+
+                        break;
                     }
         
 
@@ -1791,7 +1813,50 @@
 
 
                         break;
+                        default:
+
+                            levels = [0];
+                            Isle = [0]; 
+                            rack = [1];
+                            type = ["Floor"];
+                            storage = ["D"];
+                            rak = ["R"];
+
+                            var array = [];
+
+                            var array = [];
+                            if(levelType.value == "Floor"){
+                                rack.forEach(element => {
+                                    array.push('ALL' + element);
+                                });
+                            }
+                            array.sort();
+
+                            Location = array;
+
+                        break;
                 }
+                }else{
+                    switch (room) {
+                        case value:
+                            default:
+                                levels = [0];
+                                Isle = [0]; 
+                                rack = [1];
+                                type = ["Floor"];
+                                storage = ["D"];
+                                rak = ["R"];
+                                var array = [];
+                                var array = [];
+                                if(levelType.value == "Floor"){
+                                    rack.forEach(element => {
+                                        array.push('ALL' + element);
+                                    });
+                                }
+                                array.sort();
+                                Location = array;
+                            break;
+                    }
                 }
 
                 // for (let i = 0; i < location12.length; i++) {
@@ -1835,6 +1900,9 @@
                             case "Receiving Area":
                             type = ["Select Type", "Floor"];
                             break;
+                            default:
+                                type = ["Select Type", "Floor"];
+                            break;
                         }
 
                             var optionsHtml = '';
@@ -1862,6 +1930,9 @@
                             case "Rack F":
                             type = ["Select Type", "Level"];
                             break;
+                            default:
+                                type = ["Select Type", "Floor"];
+                            break;
                         }
 
                             var optionsHtml = '';
@@ -1869,7 +1940,21 @@
                                 optionsHtml += '<option value="' + num + '">' + num + '</option>';
                             });
                             levelType.innerHTML = optionsHtml;
-                        } 
+                        } else{
+                            switch(room){
+                                
+                                default:
+                                    type = ["Select Type", "Floor"];
+                                break;
+                            }
+
+
+                            var optionsHtml = '';
+                            type.forEach(function (num) {
+                                optionsHtml += '<option value="' + num + '">' + num + '</option>';
+                            });
+                            levelType.innerHTML = optionsHtml;
+                        }
                 }
             //Primary
             $(document).ready(function() {
@@ -2044,6 +2129,15 @@
                                     id: 'New_Qty_Converted'+x,
                                     name: 'New_Qty_Converted',
                                     value: ""
+                                }).appendTo(row);
+                                $('#tblPage_new').append(row);
+
+
+                                $('<input>').attr({
+                                    type: 'hidden',
+                                    id: 'id_transaction'+x,
+                                    name: 'id_transaction',
+                                    value: data._id
                                 }).appendTo(row);
                                 $('#tblPage_new').append(row);
                                 

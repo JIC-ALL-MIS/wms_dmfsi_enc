@@ -4,6 +4,8 @@
 <head>
     <%- include('./partials/head'); -%>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -59,10 +61,14 @@
         ***********************************-->
                     <div class="content-body">
                         <div class="container-fluid">
-
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Raw Materials</h4>
+                                </div>
+                            </div>
                             <div class="row">
 
-                                <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                                <!-- <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
                                     <div class="widget-stat card">
                                         <div class="card-body p-4">
                                             <div class="media ai-icon">
@@ -228,151 +234,63 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
 
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4 class="card-title"><%= language.latest_purchases %></h4>
+                                            <h4 class="card-title">Incoming</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead class="thead-info">
-                                                        <tr>
-                                                            <!--<th scope="col"><%= language.date %></th>-->
-                                                            <th scope="col">Warehouse</th>
-                                                            <th scope="col"><%= language.supplier %></th>
-                                                            <th scope="col">QTY</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <% purchases_table.forEach((user)=> { %>
-
-                                                            <% if(master_shop[0].currency_placement == 1) { %>
-
-                                                                <tr>
-                                                                    <!--<th><%= user.date %></th>-->
-                                                                    <td><%= user.warehouse_name%></td>
-                                                                    <td><%= user.suppliers %></td>
-                                                                 
-                                                                </tr>
-                                                            <% } else { %>
-                                                                        
-                                                                <tr>
-                                                                    <!--<th><%= user.date %></th>-->
-                                                                    <td><%= user.warehouse_name%></td>
-                                                                    <td><%= user.suppliers %></td>
-
-                                                                </tr>
-                                                            <% } %>
-                                                        <% }) %>
-                                                    </tbody>
-                                                </table>
+                                                <canvas id="myLineChart" width="400" height="400"></canvas>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4 class="card-title"><%= language.latest_sales %></h4>
+                                            <h4 class="card-title">Outgoing</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead class="thead-info">
-                                                        <tr>
-                                                            <!--<th scope="col"><%= language.date %></th>-->
-                                                            <th scope="col">Warehouse</th>
-                                                            <th scope="col"><%= language.customer %></th>
-                                                            <th scope="col">QTY</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <% sales_table.forEach((user)=> { %>
-
-                                                            <% if(master_shop[0].currency_placement == 1) { %>
-
-                                                                <tr>
-                                                                    <!--<th><%= user.date %></th>-->
-                                                                    <td><%= user.warehouse_name %></td>
-                                                                    <td><%= user.customer %></td>
-                                                                    <td>  <%= user.sale_product[0].quantity %></td>
-                                                                </tr>
-                                                            <% } else { %>
-                                                                        
-                                                                <tr>
-                                                                    <!--<th><%= user.date %></th>-->
-                                                                    <td><%= user.warehouse_name %></td>
-                                                                    <td><%= user.customer %></td>
-                                                                    <td>  <%= user.sale_product[0].quantity %></td>
-                                                                </tr>
-                                                            <% } %>
-
-                                                        <% }) %>
-                                                    </tbody>
-                                                </table>
+                                               
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                
-                                
-                                 <div class="col-lg-4">
+
+                                 <div class="col-lg-3">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4 class="card-title"><%= language.latest_internal_transfer %></h4>
+                                            <h4 class="card-title">Adjustment</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead class="thead-info">
-                                                        <!--<tr>-->
-                                                        <!--    <th scope="col"><%= language.date %></th>-->
-                                                        <!--    <th scope="col">Warehouse</th>-->
-                                                        <!--    <th scope="col"><%= language.supplier %></th>-->
-                                                        <!--    <th scope="col">QTY</th>-->
-                                                        <!--</tr>-->
-                                                        
-                                                        <tr>
-                                                            <th colspan="2"><center>FROM</center></th>
-                                                            <th colspan="2"><center>To</center></th>
-                                                        </tr>
-                                                       <tr>
-                                                            <th>Warehouse </th>
-                                                            <th>Qty</th>
-                                                            <th>Warehouse </th>
-                                                            <th>Qty</th>
-                                                       
-                                                       </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <% transfer_table.forEach((user)=> { %>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                                     
-
-                                                                <tr>
-                                                                    <td><%= user.fromWarehouse %></td>
-                                                                    <td><%= user.FromtotalQuantity %></td>
-                                                                    
-                                                                    <td><%= user.toWareHouse %></td>
-                                                                    <td><%= user.TototalQuantity %></td>
-                                                                </tr>
-                                                          
-                                                        <% }) %>
-                                                    </tbody>
-                                                </table>
+                                <div class="col-lg-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Transfer</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                                <!-- <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
                                     <div class="widget-stat card bg-danger">
                                         <div class="card-body  p-4">
                                             <div class="media">
@@ -454,7 +372,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
 
@@ -485,7 +403,81 @@
     <!--**********************************
         Scripts
     ***********************************-->
-    <%- include('./partials/script'); -%>
+    <%- include('./partials/script'); -%>.
+
+
+        <script>
+            // Get the context of the canvas element we want to select
+            var ctx = document.getElementById('myLineChart').getContext('2d');
+        
+            function fetchData() {
+                // Make an AJAX request
+                $.ajax({
+                    url: './raw_line', // Replace 'your_data_endpoint_url_here' with your actual data endpoint URL
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        // On success, update chart with fetched data
+                        // console.log(response)
+                        updateChart(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+
+
+            function updateChart(data) {
+                var labels = [];
+                var quantities = [];
+
+                // Extract labels and quantities from fetched data
+                data.forEach(function(item) {
+                    labels.push(item.date);
+                    quantities.push(item.totalQuantity);
+                });
+
+                // Update chart data with fetched data
+                myLineChart.data.labels = labels;
+                myLineChart.data.datasets[0].data = quantities;
+
+                // Update the chart
+                myLineChart.update();
+            }
+
+
+            fetchData();
+
+
+            var options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            };
+
+
+            var myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Total Quantity - ',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [],
+                        fill: false,
+                    }]
+                },
+                options: options
+            });
+      </script>
 
         <!--**********************************
         Scripts end
