@@ -1006,7 +1006,7 @@
 
 
             function startDataRefresh() {
-                const pollingInterval = 1000;
+                const pollingInterval = 5000;
                 // Call fetchDataAndUpdateChart for each data source and its corresponding chart
                 setInterval(() => fetchDataAndUpdateChart(fetchData, ctx), pollingInterval);
                 setInterval(() => fetchDataAndUpdateChart(fetchDataOut, ctx1), pollingInterval);
