@@ -2140,6 +2140,24 @@
                                     value: data._id
                                 }).appendTo(row);
                                 $('#tblPage_new').append(row);
+
+                                $('<input>').attr({
+                                    type: 'hidden',
+                                    id: 'from_invoice'+x,
+                                    name: 'from_invoice',
+                                    value: data.invoice_product
+                                }).appendTo(row);
+                                $('#tblPage_new').append(row);
+
+
+                                $('<input>').attr({
+                                    type: 'hidden',
+                                    id: 'to_invoice'+x,
+                                    name: 'to_invoice',
+                                    value: data.invoice_product
+                                }).appendTo(row);
+                                $('#tblPage_new').append(row);
+                                
                                 
                                 ComputeConversion(x, data.maxPerUnit);
                                 RoomProducts(x);

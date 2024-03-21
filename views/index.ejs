@@ -488,6 +488,7 @@
             //Raw Material
             function fetchData() {
                 // Make an AJAX request
+                console.log("1")
                 $.ajax({
                     url: './raw_line', // Replace 'your_data_endpoint_url_here' with your actual data endpoint URL
                     type: 'GET',
@@ -534,6 +535,23 @@
                     }
                 });
             }
+            function fetchDataTF() {
+                // Make an AJAX request
+                $.ajax({
+                    url: './raw_trf_line', // Replace 'your_data_endpoint_url_here' with your actual data endpoint URL
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        // On success, update chart with fetched data
+                        // console.log(response)
+                        updateChartTRF(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+
 
             function updateChart(data) {
                 var labels = [];
@@ -601,11 +619,34 @@
                 // Update the chart
                 myLineChart2.update();
             }
+            function updateChartTRF(data) {
+                var labels = [];
+                var quantities = [];
+
+                // Extract labels and quantities from fetched data
+                data.forEach(function(item) {
+                    
+                    var dob = new Date(item.date);
+                    var dobArr = dob.toDateString().split(' ');
+                    var dobFormat = dobArr[2] + ' ' + dobArr[1] + ' ' + dobArr[3];
+                    // alert(dobFormat); 
+                    labels.push(dobFormat);
+                    quantities.push(item.totalQuantity);
+                });
+
+                // Update chart data with fetched data
+                myLineChart3.data.labels = labels;
+                myLineChart3.data.datasets[0].data = quantities;
+
+                // Update the chart
+                myLineChart3.update();
+            }
+
 
             fetchData();
             fetchDataOut();
             fetchDataADJ();
-
+            fetchDataTF();
             var options = {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -952,6 +993,33 @@
             fetchDataOutFG();
             fetchDataADJFG();
             fetchDataTFGJFG();
+
+
+
+
+            async function fetchDataAndUpdateChart(fetchFunction, chart) {
+                const newData = await fetchFunction(); // Fetch data using the provided fetchFunction
+                // chart.data = newData;
+                // chart.update(); // Update the chart with the new data
+                await fetchFunction(); 
+            }
+
+
+            function startDataRefresh() {
+                const pollingInterval = 1000;
+                // Call fetchDataAndUpdateChart for each data source and its corresponding chart
+                setInterval(() => fetchDataAndUpdateChart(fetchData, ctx), pollingInterval);
+                setInterval(() => fetchDataAndUpdateChart(fetchDataOut, ctx1), pollingInterval);
+                setInterval(() => fetchDataAndUpdateChart(fetchDataADJ, ctx2), pollingInterval);
+                setInterval(() => fetchDataAndUpdateChart(fetchDataTF, ctx3), pollingInterval);
+
+                setInterval(() => fetchDataAndUpdateChart(fetchDataFG, ctxFG), pollingInterval);
+                setInterval(() => fetchDataAndUpdateChart(fetchDataOutFG, ctx1FG), pollingInterval);
+                setInterval(() => fetchDataAndUpdateChart(fetchDataADJFG, ctx2FG), pollingInterval);
+                setInterval(() => fetchDataAndUpdateChart(fetchDataTFGJFG, ctx3FG), pollingInterval);
+            }
+
+            startDataRefresh();
       </script>
 
         <!--**********************************
