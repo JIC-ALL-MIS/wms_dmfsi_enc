@@ -1082,11 +1082,12 @@
                                     
                                       }
                                       var color ;
+                                      
                                       if(sum > 0){
                                         color = 'red'
                                       }else{
                                         color = 'green'
-                                    }
+                                      }
                                       if (datahoverItem && datahoverItem[c] && datahoverItem[c][a] && datahoverItem[c][a][b]) {
                               
                                           dataItems += '<td style="height:100px" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[c][a][b] ? true : false) + '"><center><strong> DB' + c + a + 'L' + b +'</strong><div style="background-color: '+color+'; width: 50px; height: 50px; margin: 0 auto;"><b style="color:white">' + sum +'</b></div></center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>' +  datahoverItem[c][a][b] +'</tbody></table></div></td>';
@@ -1863,7 +1864,7 @@
                 } else if(room_value == "Rack B"){
                       let Brack = [5,4,3,2,1]
                       if(Type_value == "Level"){
-          
+                        console.log( "Data", DataRes)
                         var dataItems = '';
                         dataItems = '<tr>';
                         Brack.forEach(function(BItem) {
@@ -1888,7 +1889,7 @@
                               }
 
 
-                              if (DataRes?.prd_data_name?.[c]?.["B"]?.["Level"]?.[b] && Array.isArray(DataRes.prd_data_name[c]["B"]["Level"][b])) {
+                              if (DataRes?.prd_data_name?.[c]?.["B"]?.["Level"]?.[b] && Array.isArray(DataRes.prd_data_name[c]["B"][b])) {
                                         const numberOfProducts = DataRes.prd_data_name[c]["B"]["Level"][b].length;
                                         
                                         // alert(florArea)
@@ -1997,13 +1998,14 @@
                                         } 
                                 }
                                 var colora ;
+                                console.log("color A", sumA + " <> " + "C" + c + 'F' + 'L' + b )
                                 if(sumA > 0){
                                   colora = 'red'
                                 }else{
                                   colora = 'green'
                                 }
 
-
+                                console.log("color B", sumB + " <> " + "C" + c + 'B' + 'L' + b )
                                 var colorb ;
                                 if(sumB > 0){
                                   colorb = 'red'
@@ -2023,14 +2025,14 @@
                                   'F' +
                                   'L' +
                                   b +
-                                  '</strong> <div style="background-color: '+colora+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' +
+                                  '</strong> <div style="background-color: '+colorb+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' +
                                     sumB +
                                   '</b></div> </center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>' +
                                   datahoverItem[c]["F"][b] +
                                   '</tbody></table></div></div>';
                               } else {
                                 
-                                dataItems += '<div style="width: 200px; height: 50px; margin: 0 auto; border: 0.5px solid black;"><center><strong> CB' + c + 'F' + 'L' + b + '</strong> <div style="background-color: '+colora+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' + sumB + '</b></div> </center></div>';
+                                dataItems += '<div style="width: 200px; height: 50px; margin: 0 auto; border: 0.5px solid black;"><center><strong> CB' + c + 'F' + 'L' + b + '</strong> <div style="background-color: '+colorb+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' + sumB + '</b></div> </center></div>';
                               }
 
 
@@ -2044,14 +2046,14 @@
                                   'B' +
                                   'L' +
                                   b +
-                                  '</strong> <div style="background-color: '+colorb+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' +
+                                  '</strong> <div style="background-color: '+colora+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' +
                                   sumA +
                                   '</b></div> </center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>' +
                                   datahoverItem[c]["B"][b] +
                                   '</tbody></table></div></div>';
                               } else {
                                 
-                                dataItems += '<div style="width: 200px; height: 50px; margin: 0 auto; border: 0.5px solid black;"><center><strong> CB' + c + 'B' + 'L' + b + '</strong> <div style="background-color: '+colorb+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' + sumA + '</b></div></center></div>';
+                                dataItems += '<div style="width: 200px; height: 50px; margin: 0 auto; border: 0.5px solid black;"><center><strong> CB' + c + 'B' + 'L' + b + '</strong> <div style="background-color: '+colora+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' + sumA + '</b></div></center></div>';
                               }
                             
                               dataItems += '</td>';
@@ -2674,14 +2676,14 @@
                                   'F' +
                                   'L' +
                                   b +
-                                  '</strong> <div style="background-color: '+colora+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' +
+                                  '</strong> <div style="background-color: '+colorb+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' +
                                     sumB +
                                   '</b></div> </center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>' +
                                   datahoverItem[c]["F"][b] +
                                   '</tbody></table></div></div>';
                               } else {
                                 
-                                dataItems += '<div style="width: 200px; height: 50px; margin: 0 auto; border: 0.5px solid black;"><center><strong> CD' + c + 'F' + 'L' + b + '</strong> <div style="background-color: '+colora+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' + sumB + '</b></div> </center></div>';
+                                dataItems += '<div style="width: 200px; height: 50px; margin: 0 auto; border: 0.5px solid black;"><center><strong> CD' + c + 'F' + 'L' + b + '</strong> <div style="background-color: '+colorb+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' + sumB + '</b></div> </center></div>';
                               }
 
 
@@ -2695,14 +2697,14 @@
                                   'B' +
                                   'L' +
                                   b +
-                                  '</strong> <div style="background-color: '+colorb+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' +
+                                  '</strong> <div style="background-color: '+colora+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' +
                                   sumA +
                                   '</b></div> </center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td></tr></thead><tbody>' +
                                   datahoverItem[c]["B"][b] +
                                   '</tbody></table></div></div>';
                               } else {
                                 
-                                dataItems += '<div style="width: 200px; height: 50px; margin: 0 auto; border: 0.5px solid black;"><center><strong> CD' + c + 'B' + 'L' + b + '</strong> <div style="background-color: '+colorb+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' + sumA + '</b></div></center></div>';
+                                dataItems += '<div style="width: 200px; height: 50px; margin: 0 auto; border: 0.5px solid black;"><center><strong> CD' + c + 'B' + 'L' + b + '</strong> <div style="background-color: '+colora+'; width: 200px; height: 25px; margin: 0 auto;"><b style="color:white">' + sumA + '</b></div></center></div>';
                               }
 
 
@@ -2778,15 +2780,43 @@
 
                           
                         }
+                        var color1;
+                        var color2;
+                        var color3;
+                        var color4;
+
+                        if(F[1] > 0){
+                          color1 = "red";
+                        }else{
+                          color1 = "green";
+                        }
+
+                        if(F[2] > 0){
+                          color2 = "red";
+                        }else{
+                          color2 = "green";
+                        }
+
+                        if(F[3] > 0){
+                          color3 = "red";
+                        }else{
+                          color3 = "green";
+                        }
+
+                        if(F[4] > 0){
+                          color4 = "red";
+                        }else{
+                          color4 = "green";
+                        }
 
                         var dataItems ='';
                         dataItems += '<tr>';
-                        dataItems += '<td style="width: 200px; height: 150px" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[2] ? true : false) +'"><center><strong>CD5SF2</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + F[2] + '</b></div></center> <div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' + datahoverItem[2] +'</tbody></table></div></td>';
-                        dataItems += '<td style="width: 200px; height: 150px" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[3] ? true : false) +'"><center><strong>CD5SF3</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + F[3] + '</b></div></center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' + datahoverItem[3] +'</tbody></table></div></td>';
+                        dataItems += '<td style="background-color: '+color2+'; style="width: 200px; height: 150px" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[2] ? true : false) +'"><center><strong>CD5SF2</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + F[2] + '</b></div></center> <div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' + datahoverItem[2] +'</tbody></table></div></td>';
+                        dataItems += '<td style="background-color: '+color3+';  style="width: 200px; height: 150px" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[3] ? true : false) +'"><center><strong>CD5SF3</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + F[3] + '</b></div></center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' + datahoverItem[3] +'</tbody></table></div></td>';
                         dataItems += '</tr>';
                         dataItems += '<tr>';
-                        dataItems += '<td style="width: 200px; height: 150px" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[1] ? true : false) +'"><center><strong>CD5SF1</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + F[1] + '</b></div></center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' + datahoverItem[1] +'</tbody></table></div></td>';
-                        dataItems += '<td style="width: 200px; height: 150px" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[4] ? true : false) +'"><center><strong>CD5SF4</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + F[4] + '</b></div></center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' + datahoverItem[4] +'</tbody></table></div></td>';
+                        dataItems += '<td style="background-color: '+color1+'; style="width: 200px; height: 150px" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[1] ? true : false) +'"><center><strong>CD5SF1</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + F[1] + '</b></div></center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' + datahoverItem[1] +'</tbody></table></div></td>';
+                        dataItems += '<td style="background-color: '+color4+'; style="width: 200px; height: 150px" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[4] ? true : false) +'"><center><strong>CD5SF4</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + F[4] + '</b></div></center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' + datahoverItem[4] +'</tbody></table></div></td>';
                         dataItems += '</tr>';
                         dataBody.append(dataItems);
                         $(document).ready(function () {
@@ -2871,15 +2901,22 @@
                                     
                                       }
 
+                                      var color;
+
+                                      if(sum > 0){
+                                        color = "red";
+                                      }else{
+                                        color = "green";
+                                      }
 
                                       if (datahoverItem && datahoverItem[c] &&datahoverItem[c][a] &&datahoverItem[c][a][b]) {
                                       dataItems +='<td style="height:100px" id="text-to-hover" class="button-text contactme" data-has-data="' +(datahoverItem[c][a][b] ? true : false) +'"><center><strong> CE' + c +
-                                        a +'L' +b +'</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' +sum +
+                                        a +'L' +b +'</strong><div style="background-color: '+color+'; width: 50px; height: 50px; margin: 0 auto;"><b>' +sum +
                                         '</b></div></center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' +
                                         datahoverItem[c][a][b] +
                                         '</tbody></table></div></td>';
                                     }else{
-                                      dataItems += '<td style="height:100px"><center><strong> CE' + c + a + 'L' + b + '</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + sum + '</b></div></center></td>';
+                                      dataItems += '<td style="height:100px"><center><strong> CE' + c + a + 'L' + b + '</strong><div style="background-color: '+color+';  width: 50px; height: 50px; margin: 0 auto;"><b>' + sum + '</b></div></center></td>';
                                     }
                                   
                                   
@@ -2967,18 +3004,24 @@
                                         }
                                     
                                       }
+                                      var color;
 
+                                      if(sum > 0){
+                                        color = "red";
+                                      }else{
+                                        color = "green";
+                                      }
 
                                       if (datahoverItem && datahoverItem[c] &&datahoverItem[c][a] &&datahoverItem[c][a][b]) {
                                       dataItems +='<td style="height:100px" id="text-to-hover" class="button-text contactme" data-has-data="' +(datahoverItem[c][a][b] ? true : false) +'"><center><strong> CE' + c +
-                                        a +'F' +b +'</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' +sum +
+                                        a +'F' +b +'</strong><div style="background-color: '+color+'; width: 50px; height: 50px; margin: 0 auto;"><b>' +sum +
                                         '</b></div></center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' +
                                         datahoverItem[c][a][b] +
                                         '</tbody></table></div></td>';
                                         console.log("adasdas")
                                     }else{
                                       
-                                      dataItems += '<td style="height:100px"><center><strong> CE' + c + a + 'F' + b + '</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + sum + '</b></div></center></td>';
+                                      dataItems += '<td style="height:100px"><center><strong> CE' + c + a + 'F' + b + '</strong><div style="background-color: '+color+'; width: 50px; height: 50px; margin: 0 auto;"><b>' + sum + '</b></div></center></td>';
                                     }
                                   
 
@@ -3072,16 +3115,25 @@
                                     
                                       }
 
+                                      var color;
+
+                                      if(sum > 0){
+                                        color = "red";
+                                      }else{
+                                        color = "green";
+                                      }
+
+
                                       if (datahoverItem && datahoverItem[c] &&datahoverItem[c][a] &&datahoverItem[c][a][b]) {
                                       dataItems +='<td style="height:100px" id="text-to-hover" class="button-text contactme" data-has-data="' +(datahoverItem[c][a][b] ? true : false) +'"><center><strong> CF' + c +
-                                        a +'L' +b +'</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' +sum +
+                                        a +'L' +b +'</strong><div style="background-color: '+color+'; width: 50px; height: 50px; margin: 0 auto;"><b>' +sum +
                                         '</b></div></center><div class="emailcontainer"><table style="width: 100%;"><thead><tr><td>Product Name</td><td>Qty</td></tr></thead><tbody>' +
                                         datahoverItem[c][a][b] +
                                         '</tbody></table></div></td>';
                                   
                                     }else{
                                       
-                                      dataItems += '<td style="height:100px"><center><strong> CF' + c + a + 'L' + b + '</strong><div style="background-color: #f0f0f0; width: 50px; height: 50px; margin: 0 auto;"><b>' + sum + '</b></div></center></td>';
+                                      dataItems += '<td style="height:100px"><center><strong> CF' + c + a + 'L' + b + '</strong><div style="background-color: '+color+'; width: 50px; height: 50px; margin: 0 auto;"><b>' + sum + '</b></div></center></td>';
                                     }
                                     
                                   
