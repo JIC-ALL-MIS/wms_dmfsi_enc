@@ -466,8 +466,8 @@
               return number.toFixed(3); // Display number with 3 decimal places
             }
           } else {
-            console.log("num", number + " is not a number");
-            return "NaN"; // Or handle the non-number case as per your requirements
+            console.log("num", typeof number + " is not a number");
+            return number.toString();; // Or handle the non-number case as per your requirements
           }
         }
 
