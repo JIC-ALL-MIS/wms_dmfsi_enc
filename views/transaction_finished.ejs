@@ -61,7 +61,7 @@
                         <div class="card-header">
                             <h4 class="card-title col-6">Transaction Reports</h4>
                             
-                        
+                            <button class="btn btn-info float-right" id="barcode_printAll" onclick="printDivAll()"><i class="fas fa-print"></i> Print All</button>
                         </div>
 
                         <div class="card-header">
@@ -180,42 +180,47 @@
                         //     "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]]
                         // });
                         let dataString = "";
-                        forData.forEach(element => {
-                            dataString += "<h3>"+element._id+"</h3>"; 
-                            dataString += "<h3>"+element.warehouse_name+"</h3>"; 
-                            dataString += "<h3>"+element.date+"</h3>"; 
+                        forData.forEach((element, i) => {
+                            dataString += "<div id='data" + i + "'>"; 
+                                dataString += "<div class='card-header'>"; 
+                                    dataString += "<h3>"+element._id+"</h3>"; 
+                                    dataString += "<h3>"+element.warehouse_name+"</h3>"; 
+                                    dataString += "<h3>"+element.date+"</h3>"; 
+                                    dataString += '<button class="btn btn-info float-right" id="barcode_print1" name="barcode_print1" onclick="printDiv('+i+')"><i class="fas fa-print"></i> Print</button>'; 
+                                dataString += "</div>"; 
 
-                            dataString += "<div class='table-responsive'>"; 
-                            dataString += "<table id='dataTable' class='table table-responsive-lg text-center'>"; 
-                            dataString += "<thead>"; 
-                            dataString += "<tr>"; 
-                            dataString += "<th>Item Code</th>"; 
-                            dataString += "<th>Item Name</th>"; 
-                            dataString += "<th>Primary Code</th>"; 
-                            dataString += "<th>Secondary Code</th>"; 
-                            dataString += "<th>Production Date</th>"; 
-                            dataString += "<th>Expiry Date</th>"; 
-                            dataString += "<th>Quantity</th>"; 
-                            dataString += "<th>UOM</th>"; 
-                            dataString += "</tr>";
-                            dataString += "</thead>"; 
-                            dataString += "<tbody>"; 
-                                element.products.forEach( item => {
-                                    dataString += "<tr>"; 
-                                        dataString += "<td>" + item.product_code + "</td>"; 
-                                        dataString += "<td>" + item.product_name + "</td>"; 
-                                        dataString += "<td>" + item.primary_code + "</td>"; 3
-                                        dataString += "<td>" + item.secondary_code + "</td>"; 
-                                        dataString += "<td>" + item.production_date + "</td>"; 
-                                        dataString += "<td>" + item.expiry_date + "</td>"; 
-                                        dataString += "<td>" + item.quantity + "</td>"; 
-                                        dataString += "<td>" + item.standard_unit + "</td>"; 
-                                    dataString += "</tr>"; 
-                                })
+                                dataString += "<div class='table-responsive'>"; 
+                                dataString += "<table id='dataTable' class='table table-responsive-lg text-center'>"; 
+                                dataString += "<thead>"; 
+                                dataString += "<tr>"; 
+                                dataString += "<th>Item Code</th>"; 
+                                dataString += "<th>Item Name</th>"; 
+                                dataString += "<th>Primary Code</th>"; 
+                                dataString += "<th>Secondary Code</th>"; 
+                                dataString += "<th>Production Date</th>"; 
+                                dataString += "<th>Expiry Date</th>"; 
+                                dataString += "<th>Quantity</th>"; 
+                                dataString += "<th>UOM</th>"; 
+                                dataString += "</tr>";
+                                dataString += "</thead>"; 
+                                dataString += "<tbody>"; 
+                                    element.products.forEach( item => {
+                                        dataString += "<tr>"; 
+                                            dataString += "<td>" + item.product_code + "</td>"; 
+                                            dataString += "<td>" + item.product_name + "</td>"; 
+                                            dataString += "<td>" + item.primary_code + "</td>"; 3
+                                            dataString += "<td>" + item.secondary_code + "</td>"; 
+                                            dataString += "<td>" + item.production_date + "</td>"; 
+                                            dataString += "<td>" + item.expiry_date + "</td>"; 
+                                            dataString += "<td>" + item.quantity + "</td>"; 
+                                            dataString += "<td>" + item.standard_unit + "</td>"; 
+                                        dataString += "</tr>"; 
+                                    })
 
-                                // console.log(element.product.product_code)
-                            dataString += "</tbody>"; 
-                            dataString += "</table>"; 
+                                    // console.log(element.product.product_code)
+                                dataString += "</tbody>"; 
+                                dataString += "</table>"; 
+                                dataString += "</div>"; 
                             dataString += "</div>"; 
                         });
 
@@ -264,8 +269,90 @@
             
         }
     
-    
+        function printDivAll(){
+
+            var buttonToRemove = document.getElementsByName("barcode_print1");
+            
+            for(let x = 0; x < buttonToRemove.length - 1; x++){
+                buttonToRemove[x].style.display = "none";
+                
+            }
+            
+            var printContents = document.getElementById("dataProcess").innerHTML;
+            
+            var printWindow = window.open('', '_blank');
+  
+                printWindow.document.open();
+                printWindow.document.write('<html><head><title>Print</title> ');
+
+                printWindow.document.write('<link href="../../../vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">');
+                printWindow.document.write('<link href="../../../css/style2.css" rel="stylesheet"></link>');
+                
+                printWindow.document.write('</head><body>');
+                printWindow.document.write(printContents);
+                
+
+                printWindow.document.write('</body></html>');
+                
+                printWindow.document.close();
+                setTimeout(function() {
+                    printWindow.print();
+
+
+                    for(let x = 0; x < buttonToRemove.length - 1; x++){
+                        buttonToRemove[x].style.display = "block";
+                    }
+                    // buttonToRemove.style.display = "block";
+                }, 1500);
+
+        }
         
+
+
+        function printDiv(i){
+
+            var buttonToRemove = document.getElementsByName("barcode_print1");
+
+            for(let x = 0; x < buttonToRemove.length - 1; x++){
+                if(x == i){
+                     buttonToRemove[x].style.display = "none";
+                }
+               
+                
+            }
+
+            var printContents = document.getElementById("data"+i).innerHTML;
+
+            var printWindow = window.open('', '_blank');
+
+                printWindow.document.open();
+                printWindow.document.write('<html><head><title>Print</title> ');
+
+                printWindow.document.write('<link href="../../../vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">');
+                printWindow.document.write('<link href="../../../css/style2.css" rel="stylesheet"></link>');
+                
+                printWindow.document.write('</head><body>');
+                printWindow.document.write(printContents);
+                
+
+                printWindow.document.write('</body></html>');
+                
+                printWindow.document.close();
+                setTimeout(function() {
+                    printWindow.print();
+
+
+                    for(let x = 0; x < buttonToRemove.length - 1; x++){
+
+                        if(x == 1){
+                            buttonToRemove[x].style.display = "block";
+                        }
+                        
+                    }
+                    // buttonToRemove.style.display = "block";
+                }, 1500);
+
+        }
     </script>
 </body>
 </html>
