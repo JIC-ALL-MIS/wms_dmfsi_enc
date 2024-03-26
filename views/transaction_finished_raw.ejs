@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head'); -%>
+
+</head>
+<body>
+     <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <%- include('./partials/header_logo'); -%>
+
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <%- include('./partials/header',{titel: "Transaction Reports for Finished Goods"}); -%>
+
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <%- include('./partials/sidebar'); -%>
+
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <div class="content-body">
+            <div class="container-fluid">
+                <!-- row -->
+
+                <div class="col-lg-12">
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h4 class="card-title col-6">Transaction Reports</h4>
+                            
+                            <button class="btn btn-info float-right" id="barcode_printAll" onclick="printDivAll()"><i class="fas fa-print"></i> Print All</button>
+                        </div>
+
+                        <div class="card-header">
+                            <select class="form-control" id="product_category" name="product_category">
+                                <option value="rm">Raw Materials</option>
+                                <!-- <option value="fg">Finished Goods</option> -->
+                            </select>
+                            <select class="form-control" id="transaction_category" name="transaction_category">
+                                <option value="IC">Incoming</option>
+                                <option value="OG">Outgoing</option>
+                                <option value="AJ">Adjustment</option>
+                                <option value="TF">Transfer</option>
+                            </select>
+                            <select class="form-control" id="warehouse" name="warehouse">
+                               <% dataProcess.forEach(item => { %>
+                                    <option value="<%= item._id %>"><%= item._id %></option>
+                                <% }); %>
+                            </select>
+                            <input class="form-control" type="date" name="transaction_date_from" id="transaction_date_from">
+                            <input class="form-control" type="date" name="transaction_date_to" id="transaction_date_to">
+                            <input class="form-control" type="text" name="item_code" id="item_code" placeholder="Enter Item Code">
+                            <button class="btn btn-rounded btn-info text-white" id="btnFilter">Filter</button>
+                        </div>
+                        
+                        
+
+                        <div class="card-body" id="dataProcess">
+                            
+
+                            
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <%- include('./partials/footer'); -%>
+
+        <!--**********************************
+            Footer end
+        ***********************************-->   
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!-- start Toastr -->
+    <%- include('./partials/toastr'); -%>
+    <!-- End Toastr -->
+
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+   
+	<%- include('./partials/script'); -%>
+
+	<!--**********************************
+        Scripts end
+    ***********************************-->
+
+
+    <script>
+        $(document).ready(function() {
+            $('#btnFilter').click(function() {
+                var product_category = $('#product_category').val();
+                var warehouse_category = $('#warehouse').val();
+                var transaction_category = $('#transaction_category').val();
+                var transaction_date_from = $('#transaction_date_from').val();
+                var transaction_date_to = $('#transaction_date_to').val();
+                var item_code = $('#item_code').val();
+                
+                // console.log(product_category + " <> " + transaction_category + " <> " +  transaction_date_from +" <> "+ transaction_date_to)
+
+                $.ajax({
+                    url: '/transaction_reports/reports',
+                    type: 'POST',
+                    data: { product_category : product_category, transaction_category: transaction_category, transaction_date_from: transaction_date_from, transaction_date_to: transaction_date_to, warehouse_category: warehouse_category, item_code : item_code},
+                    success: function(response) {
+                        console.log(response.data)
+                        const forData =  response.data;
+                        var dataProcess = document.getElementById("dataProcess");
+                       
+                        let dataString = "";
+                        forData.forEach((element, i) => {
+                            dataString += "<div id='data" + i + "'>"; 
+                                dataString += "<div class='card-header'>"; 
+                                    dataString += "<h3>"+element._id+"</h3>"; 
+                                    dataString += "<h3>"+element.warehouse_name+"</h3>"; 
+                                    dataString += "<h3>"+element.date+"</h3>"; 
+                                    dataString += '<button class="btn btn-info float-right" id="barcode_print1" name="barcode_print1" onclick="printDiv('+i+')"><i class="fas fa-print"></i> Print</button>'; 
+                                dataString += "</div>"; 
+
+                                dataString += "<div class='table-responsive'>"; 
+                                dataString += "<table id='dataTable' class='table table-responsive-lg text-center'>"; 
+                                dataString += "<thead>"; 
+                                dataString += "<tr>"; 
+                                dataString += "<th>Item Code</th>"; 
+                                dataString += "<th>Item Name</th>"; 
+                                dataString += "<th>Primary Code</th>"; 
+                                dataString += "<th>Secondary Code</th>"; 
+                                dataString += "<th>Production Date</th>"; 
+                                dataString += "<th>Expiry Date</th>"; 
+                                dataString += "<th>Quantity</th>"; 
+                                dataString += "<th>UOM</th>"; 
+                                dataString += "</tr>";
+                                dataString += "</thead>"; 
+                                dataString += "<tbody>"; 
+                                    element.products.forEach( item => {
+                                        dataString += "<tr>"; 
+                                            dataString += "<td>" + item.product_code + "</td>"; 
+                                            dataString += "<td>" + item.product_name + "</td>"; 
+                                            dataString += "<td>" + item.primary_code + "</td>"; 3
+                                            dataString += "<td>" + item.secondary_code + "</td>"; 
+                                            dataString += "<td>" + item.production_date + "</td>"; 
+                                            dataString += "<td>" + item.expiry_date + "</td>"; 
+                                            dataString += "<td>" + item.quantity + "</td>"; 
+                                            dataString += "<td>" + item.standard_unit + "</td>"; 
+                                        dataString += "</tr>"; 
+                                    })
+
+                                    // console.log(element.product.product_code)
+                                dataString += "</tbody>"; 
+                                dataString += "</table>"; 
+                                dataString += "</div>"; 
+                            dataString += "</div>"; 
+                        });
+
+                        dataProcess.innerHTML = dataString;
+
+                    }
+                })
+            })
+        });
+
+
+
+        function view_detail(id) {
+            var product_category = $('#product_category').val();
+            var transaction_category = $('#transaction_category').val();
+            if(product_category == "fg"){
+                switch (transaction_category) {
+                    case "IC":
+                        var url = "./viewdata_inc_fg/" + id;
+                        window.open(url, "_blank");
+                    break;
+
+                    case "OG":
+                        var url = "./viewdata_og_fg/" + id;
+                        window.open(url, "_blank");
+                    break;
+
+
+                    case "AJ":
+                        var url = "./viewdata_aj_fg/" + id;
+                        window.open(url, "_blank");
+                    break;
+
+
+                    case "TF":
+                        var url = "./viewdata_tf_fg/" + id;
+                        window.open(url, "_blank");
+                    break;
+                
+                    
+                }
+
+            }else if(product_category == "rm"){
+
+            }
+            
+        }
+    
+        function printDivAll(){
+
+            var buttonToRemove = document.getElementsByName("barcode_print1");
+            
+            for(let x = 0; x < buttonToRemove.length - 1; x++){
+                buttonToRemove[x].style.display = "none";
+                
+            }
+            
+            var printContents = document.getElementById("dataProcess").innerHTML;
+            
+            var printWindow = window.open('', '_blank');
+  
+                printWindow.document.open();
+                printWindow.document.write('<html><head><title>Print</title> ');
+
+                printWindow.document.write('<link href="../../../vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">');
+                printWindow.document.write('<link href="../../../css/style2.css" rel="stylesheet"></link>');
+                
+                printWindow.document.write('</head><body>');
+                printWindow.document.write(printContents);
+                
+
+                printWindow.document.write('</body></html>');
+                
+                printWindow.document.close();
+                setTimeout(function() {
+                    printWindow.print();
+
+
+                    for(let x = 0; x < buttonToRemove.length - 1; x++){
+                        buttonToRemove[x].style.display = "block";
+                    }
+                    // buttonToRemove.style.display = "block";
+                }, 1500);
+
+        }
+        
+
+
+        function printDiv(i){
+
+            var buttonToRemove = document.getElementsByName("barcode_print1");
+
+            for(let x = 0; x < buttonToRemove.length - 1; x++){
+                if(x == i){
+                     buttonToRemove[x].style.display = "none";
+                }
+               
+                
+            }
+
+            var printContents = document.getElementById("data"+i).innerHTML;
+
+            var printWindow = window.open('', '_blank');
+
+                printWindow.document.open();
+                printWindow.document.write('<html><head><title>Print</title> ');
+
+                printWindow.document.write('<link href="../../../vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">');
+                printWindow.document.write('<link href="../../../css/style2.css" rel="stylesheet"></link>');
+                
+                printWindow.document.write('</head><body>');
+                printWindow.document.write(printContents);
+                
+
+                printWindow.document.write('</body></html>');
+                
+                printWindow.document.close();
+                setTimeout(function() {
+                    printWindow.print();
+
+
+                    for(let x = 0; x < buttonToRemove.length - 1; x++){
+
+                        if(x == 1){
+                            buttonToRemove[x].style.display = "block";
+                        }
+                        
+                    }
+                    // buttonToRemove.style.display = "block";
+                }, 1500);
+
+        }
+    </script>
+</body>
+</html>
