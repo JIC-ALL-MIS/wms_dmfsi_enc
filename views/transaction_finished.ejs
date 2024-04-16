@@ -69,12 +69,12 @@
                                 <!-- <option value="rm">Raw Materials</option> -->
                                 <option value="fg">Finished Goods</option>
                             </select>
-                            <select class="form-control" id="transaction_category" name="transaction_category">
+                            <!-- <select class="form-control" id="transaction_category" name="transaction_category">
                                 <option value="IC">Incoming</option>
                                 <option value="OG">Outgoing</option>
                                 <option value="AJ">Adjustment</option>
                                 <option value="TF">Transfer</option>
-                            </select>
+                            </select> -->
                             <select class="form-control" id="warehouse" name="warehouse">
                                <% dataProcess.forEach(item => { %>
                                     <option value="<%= item._id %>"><%= item._id %></option>
@@ -82,7 +82,7 @@
                             </select>
                             <input class="form-control" type="date" name="transaction_date_from" id="transaction_date_from">
                             <input class="form-control" type="date" name="transaction_date_to" id="transaction_date_to">
-                            <input class="form-control" type="text" name="item_code" id="item_code" placeholder="Enter Item Code">
+                            <!-- <input class="form-control" type="text" name="item_code" id="item_code" placeholder="Enter Item Code"> -->
                             <button class="btn btn-rounded btn-info text-white" id="btnFilter">Filter</button>
                         </div>
                         
@@ -142,89 +142,268 @@
                 
                 // console.log(product_category + " <> " + transaction_category + " <> " +  transaction_date_from +" <> "+ transaction_date_to)
 
+                // $.ajax({
+                //     url: '/transaction_reports/reports',
+                //     type: 'POST',
+                //     data: { product_category : product_category, transaction_category: transaction_category, transaction_date_from: transaction_date_from, transaction_date_to: transaction_date_to, warehouse_category: warehouse_category, item_code : item_code},
+                //     success: function(response) {
+                //         console.log(response.data)
+                //         const forData =  response.data;
+                //         var dataProcess = document.getElementById("dataProcess");
+                //         // var table = $("#dataTable").DataTable();
+
+                //         // if (table !== 'undefined') {
+                //         //     table.destroy();
+                //         // }
+
+
+
+                //         // $("#dataTable").DataTable({
+                //         //     paging: true,
+                //         //     select: true,
+                //         //     "order": [[0, "desc"]],
+                //         //     dom: 'Bfrtip',
+                //         //     buttons: ['pageLength'],
+                //         //     "data": response.data,
+                //         //     "columns": [
+                //         //         { "data": "warehouse_name", "name": "warehouse_name" },
+                //         //         { "data": "invoice", "name": "invoice" },
+                //         //         { "data": "date", "name": "date" },
+                //         //         {
+                //         //             data: "_id", "name": "_id", render: function (data, type, row) {
+                                    
+                //         //                 return '<button type="button" class="btn btn-success" onclick="view_detail(\'' + data + '\')"> View Details</button>';
+
+                //         //             }
+                //         //         },
+                //         //     ],
+                //         //     "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]]
+                //         // });
+                //         let dataString = "";
+                //         forData.forEach((element, i) => {
+                //             dataString += "<div id='data" + i + "'>"; 
+                //                 dataString += "<div class='card-header'>"; 
+                //                     dataString += "<h3>"+element._id+"</h3>"; 
+                //                     dataString += "<h3>"+element.warehouse_name+"</h3>"; 
+                //                     dataString += "<h3>"+element.date+"</h3>"; 
+                //                     dataString += '<button class="btn btn-info float-right" id="barcode_print1" name="barcode_print1" onclick="printDiv('+i+')"><i class="fas fa-print"></i> Print</button>'; 
+                //                 dataString += "</div>"; 
+
+                //                 dataString += "<div class='table-responsive'>"; 
+                //                 dataString += "<table id='dataTable' class='table table-responsive-lg text-center'>"; 
+                //                 dataString += "<thead>"; 
+                //                 dataString += "<tr>"; 
+                //                 dataString += "<th>Item Code</th>"; 
+                //                 dataString += "<th>Item Name</th>"; 
+                //                 dataString += "<th>Primary Code</th>"; 
+                //                 dataString += "<th>Secondary Code</th>"; 
+                //                 dataString += "<th>Production Date</th>"; 
+                //                 dataString += "<th>Expiry Date</th>"; 
+                //                 dataString += "<th>Quantity</th>"; 
+                //                 dataString += "<th>UOM</th>"; 
+                //                 dataString += "</tr>";
+                //                 dataString += "</thead>"; 
+                //                 dataString += "<tbody>"; 
+                //                     element.products.forEach( item => {
+                //                         dataString += "<tr>"; 
+                //                             dataString += "<td>" + item.product_code + "</td>"; 
+                //                             dataString += "<td>" + item.product_name + "</td>"; 
+                //                             dataString += "<td>" + item.primary_code + "</td>"; 3
+                //                             dataString += "<td>" + item.secondary_code + "</td>"; 
+                //                             dataString += "<td>" + item.production_date + "</td>"; 
+                //                             dataString += "<td>" + item.expiry_date + "</td>"; 
+                //                             dataString += "<td>" + item.quantity + "</td>"; 
+                //                             dataString += "<td>" + item.standard_unit + "</td>"; 
+                //                         dataString += "</tr>"; 
+                //                     })
+
+                //                     // console.log(element.product.product_code)
+                //                 dataString += "</tbody>"; 
+                //                 dataString += "</table>"; 
+                //                 dataString += "</div>"; 
+                //             dataString += "</div>"; 
+                //         });
+
+                //         dataProcess.innerHTML = dataString;
+
+                //     }
+                // })
+
+
                 $.ajax({
                     url: '/transaction_reports/reports',
                     type: 'POST',
                     data: { product_category : product_category, transaction_category: transaction_category, transaction_date_from: transaction_date_from, transaction_date_to: transaction_date_to, warehouse_category: warehouse_category, item_code : item_code},
                     success: function(response) {
-                        console.log(response.data)
-                        const forData =  response.data;
+                        // console.log(response.data)
+                        const forData =  response.purchases_warehouse;
+                        const sales =  response.data_sales;
+                        const adjustment =  response.data_adjustment;
+                        const transfer =  response.data_transfer;
+
                         var dataProcess = document.getElementById("dataProcess");
-                        // var table = $("#dataTable").DataTable();
-
-                        // if (table !== 'undefined') {
-                        //     table.destroy();
-                        // }
-
-
-
-                        // $("#dataTable").DataTable({
-                        //     paging: true,
-                        //     select: true,
-                        //     "order": [[0, "desc"]],
-                        //     dom: 'Bfrtip',
-                        //     buttons: ['pageLength'],
-                        //     "data": response.data,
-                        //     "columns": [
-                        //         { "data": "warehouse_name", "name": "warehouse_name" },
-                        //         { "data": "invoice", "name": "invoice" },
-                        //         { "data": "date", "name": "date" },
-                        //         {
-                        //             data: "_id", "name": "_id", render: function (data, type, row) {
-                                    
-                        //                 return '<button type="button" class="btn btn-success" onclick="view_detail(\'' + data + '\')"> View Details</button>';
-
-                        //             }
-                        //         },
-                        //     ],
-                        //     "lengthMenu": [[20, 10, 15, 25, 50, 100, 200], [20, 10, 15, 25, 50, 100, 200]]
-                        // });
                         let dataString = "";
                         forData.forEach((element, i) => {
+                            
+
                             dataString += "<div id='data" + i + "'>"; 
                                 dataString += "<div class='card-header'>"; 
-                                    dataString += "<h3>"+element._id+"</h3>"; 
-                                    dataString += "<h3>"+element.warehouse_name+"</h3>"; 
-                                    dataString += "<h3>"+element.date+"</h3>"; 
+                                    // dataString += "<h3>"+element._id+"</h3>"; 
+                                    dataString += "<h3> Warehouse : "+element.warehouse_name+"</h3>"; 
+                                    dataString += "<h3> Date: "+element.date+"</h3>"; 
                                     dataString += '<button class="btn btn-info float-right" id="barcode_print1" name="barcode_print1" onclick="printDiv('+i+')"><i class="fas fa-print"></i> Print</button>'; 
                                 dataString += "</div>"; 
 
                                 dataString += "<div class='table-responsive'>"; 
-                                dataString += "<table id='dataTable' class='table table-responsive-lg text-center'>"; 
-                                dataString += "<thead>"; 
-                                dataString += "<tr>"; 
-                                dataString += "<th>Item Code</th>"; 
-                                dataString += "<th>Item Name</th>"; 
-                                dataString += "<th>Primary Code</th>"; 
-                                dataString += "<th>Secondary Code</th>"; 
-                                dataString += "<th>Production Date</th>"; 
-                                dataString += "<th>Expiry Date</th>"; 
-                                dataString += "<th>Quantity</th>"; 
-                                dataString += "<th>UOM</th>"; 
-                                dataString += "</tr>";
-                                dataString += "</thead>"; 
-                                dataString += "<tbody>"; 
-                                    element.products.forEach( item => {
+                                    dataString += "<table id='dataTable' class='table table-responsive-lg text-center'>"; 
+                                        dataString += "<thead>"; 
                                         dataString += "<tr>"; 
-                                            dataString += "<td>" + item.product_code + "</td>"; 
-                                            dataString += "<td>" + item.product_name + "</td>"; 
-                                            dataString += "<td>" + item.primary_code + "</td>"; 3
-                                            dataString += "<td>" + item.secondary_code + "</td>"; 
-                                            dataString += "<td>" + item.production_date + "</td>"; 
-                                            dataString += "<td>" + item.expiry_date + "</td>"; 
-                                            dataString += "<td>" + item.quantity + "</td>"; 
-                                            dataString += "<td>" + item.standard_unit + "</td>"; 
-                                        dataString += "</tr>"; 
-                                    })
+                                        dataString += "<th>Item Code</th>"; 
+                                        dataString += "<th>Item Name</th>"; 
+                                        dataString += "<th>Transaction Type</th>"; 
+                                        dataString += "<th>Document Number</th>"; 
+                                        dataString += "<th>Document Date</th>"; 
+                                        dataString += "<th>Warehouse</th>"; 
+                                        dataString += "<th>Production Date</th>"; 
+                                        dataString += "<th>Expiry Date</th>"; 
+                                        dataString += "<th>Quantity</th>"; 
+                                        dataString += "<th>UOM</th>"; 
+                                        dataString += "</tr>";
+                                        dataString += "</thead>"; 
 
-                                    // console.log(element.product.product_code)
-                                dataString += "</tbody>"; 
-                                dataString += "</table>"; 
+                                        // console.log("warehouse",element.warehouse_data.length)
+                                        // console.log("incoming",element.product.length)
+                                        for (let index = 0; index < element.product.length; index++) {
+                                            const data = element.product[index];
+                                            const warehouse_data = element.warehouse_data[index];
+                                            dataString += "<tr>"; 
+                                            dataString += "<td>" + data.product_code + "</td>"; 
+                                            dataString += "<td>" + data.product_name + "</td>"; 
+                                            dataString += "<td> Incoming </td>"; 3
+                                            dataString += "<td>" + data.invoice + "</td>"; 
+                                            dataString += "<td>" + element.date + "</td>"; 
+                                            dataString += "<td>" + element.warehouse_name + "</td>"; 
+                                            dataString += "<td>" + data.production_date + "</td>"; 
+                                            dataString += "<td>" + data.expiry_date + "</td>"; 
+                                            dataString += "<td>" + data.quantity + "</td>"; 
+                                            dataString += "<td>" + data.standard_unit + "</td>"; 
+                                            dataString += "</tr>"; 
+                                            // console.log(sales_data)
+                                            // console.log("sales",sales[data.invoice].length)
+                                            // console.log("warehouse",warehouse_data._id)
+                                            for (let a = 0; a < sales[data.invoice].length; a++) {
+                                                const sales_data = sales[data.invoice][a];
+                                                    // console.log("sales",sales_data.id_transaction_from)
+                                                    if(warehouse_data._id == sales_data.id_transaction_from){
+                                                        // console.log(warehouse_data._id + " <> " + sales_data.id_transaction_from)
+                                                        dataString += "<tr>"; 
+                                                        dataString += "<td>" + sales_data.product_code + "</td>"; 
+                                                        dataString += "<td>" + sales_data.product_name + "</td>"; 
+                                                        dataString += "<td> Outgoing </td>"; 3
+                                                        dataString += "<td>" + sales_data.invoice + "</td>"; 
+                                                        dataString += "<td>" + sales_data.date + "</td>"; 
+                                                        dataString += "<td>" + sales_data.warehouse_name + "</td>"; 
+                                                        dataString += "<td>" + sales_data.production_date + "</td>"; 
+                                                        dataString += "<td>" + sales_data.expiry_date + "</td>"; 
+                                                        dataString += "<td>-" + sales_data.quantity_available + "</td>"; 
+                                                        dataString += "<td>" + sales_data.UOM + "</td>"; 
+                                                        dataString += "</tr>"; 
+                                                    }
+                                                    
+
+                                                // console.log(sales_data)
+                                            }
+
+                                            // console.log("adjustment", adjustment[data.invoice].length)
+                                            for (let b = 0; b < adjustment[data.invoice].length; b++) {
+                                                const adjustment_data = adjustment[data.invoice][b];
+                                                
+                                                if(warehouse_data._id == adjustment_data.id_transaction_from){
+                                                    console.log(warehouse_data._id + " <> " + adjustment_data.id_transaction_from)
+                                                    dataString += "<tr>"; 
+                                                    dataString += "<td>" + adjustment_data.product_code + "</td>"; 
+                                                    dataString += "<td>" + adjustment_data.product_name + "</td>"; 
+                                                    dataString += "<td> Adjustment </td>"; 
+                                                    dataString += "<td>" + adjustment_data.invoice + "</td>"; 
+                                                    dataString += "<td>" + adjustment_data.date + "</td>"; 
+                                                    dataString += "<td>" + adjustment_data.warehouse_name + "</td>"; 
+                                                    dataString += "<td>" + adjustment_data.production_date + "</td>"; 
+                                                    dataString += "<td>" + adjustment_data.expiry_date + "</td>"; 
+                                                    dataString += "<td>" + adjustment_data.quantity_available + "</td>"; 
+                                                    dataString += "<td>" + adjustment_data.UOM + "</td>"; 
+                                                    dataString += "</tr>"; 
+                                                }
+                                            }
+
+
+                                            for (let b = 0; b < transfer[data.invoice].length; b++) {
+                                                const transfer_data = transfer[data.invoice][b];
+                                                
+                                                if(warehouse_data._id == transfer_data.id_transaction_from){
+                                                    console.log(warehouse_data._id + " <> " + transfer_data.id_transaction_from)
+                                                    dataString += "<tr>"; 
+                                                    dataString += "<td>" + transfer_data.product_code + "</td>"; 
+                                                    dataString += "<td>" + transfer_data.product_name + "</td>"; 
+                                                    dataString += "<td> Transfer </td>"; 
+                                                    dataString += "<td>" + transfer_data.invoice + "</td>"; 
+                                                    dataString += "<td>" + transfer_data.date + "</td>"; 
+                                                    dataString += "<td>" + transfer_data.warehouse_name + "</td>"; 
+                                                    dataString += "<td>" + transfer_data.production_date + "</td>"; 
+                                                    dataString += "<td>" + transfer_data.expiry_date + "</td>"; 
+                                                    dataString += "<td>" + transfer_data.quantity_available + "</td>"; 
+                                                    dataString += "<td>" + transfer_data.UOM + "</td>"; 
+                                                    dataString += "</tr>"; 
+                                                }
+                                            }
+
+                                        
+                                                
+                                              
+                                                    // console.log(warehouse_data._id + " <> " + transfer_data.id_transaction_from)
+                                                    dataString += "<tr style='background-color: lightcoral; color: black;'>"; 
+                                                    dataString += "<td>" + warehouse_data.product_code + "</td>"; 
+                                                    dataString += "<td>" + warehouse_data.product_name + "</td>"; 
+                                                    dataString += "<td> Warehouse Stock </td>"; 
+                                                    dataString += "<td>" + warehouse_data.invoice + "</td>"; 
+                                                    dataString += "<td>" + element.date + "</td>"; 
+                                                    dataString += "<td>" + warehouse_data.warehouse_name + "</td>"; 
+                                                    dataString += "<td>" + warehouse_data.production_date + "</td>"; 
+                                                    dataString += "<td>" + warehouse_data.expiry_date + "</td>"; 
+                                                    dataString += "<td>" + warehouse_data.quantity_available + "</td>"; 
+                                                    dataString += "<td>" + warehouse_data.UOM + "</td>"; 
+                                                    dataString += "</tr>"; 
+                                         
+                                            
+
+                                            // console.log(sales[data.invoice].length)
+                                            
+                                        
+                                            
+                                        }
+
+
+
+                                        
+                                        // element.product.foreach( item => {
+                                        //     console.log(item)
+                                        //     dataString += "<td>" + item.product_code + "</td>"; 
+                                        //     dataString += "<td>" + item.product_name + "</td>"; 
+                                        //     dataString += "<td>" + item.primary_code + "</td>"; 3
+                                        //     dataString += "<td>" + item.secondary_code + "</td>"; 
+                                        //     dataString += "<td>" + item.production_date + "</td>"; 
+                                        //     dataString += "<td>" + item.expiry_date + "</td>"; 
+                                        //     dataString += "<td>" + item.quantity + "</td>"; 
+                                        //     dataString += "<td>" + item.standard_unit + "</td>"; 
+                                        // })
+                                        
+                                    dataString += "</table>"; 
                                 dataString += "</div>"; 
                             dataString += "</div>"; 
-                        });
+                        })
+
 
                         dataProcess.innerHTML = dataString;
+                       
 
                     }
                 })
