@@ -1278,6 +1278,7 @@ function checkExpiration(expirationDate, x) {
                     var Instock = data2.product_stock;
                     var TotalQty = 0;
                     var theUnit ;
+                   
                     if(data2.computeUsed == "P"){
                         TotalQty = data2.product_stock;
                         theUnit = data2.unit;
@@ -1286,13 +1287,29 @@ function checkExpiration(expirationDate, x) {
                         // }
 
                     }else if(data2.computeUsed == "S"){
-                        TotalQty = data2.product_stock * data2.maxPerUnit;
-                        if(data2.product_cat == "P"){
-                            TotalQty = data2.product_stock * data2.maxPerUnit ;
+                        if(data2.maxPerUnit > 0){
+                            TotalQty = data2.product_stock * data2.maxPerUnit;
+                        }else{
+                            TotalQty = data2.product_stock * 1;
                         }
+                        
+                        if(data2.product_cat == "P"){
+                            // TotalQty = data2.product_stock * data2.maxPerUnit ;
 
+                            if(data2.maxPerUnit > 0){
+                                TotalQty = data2.product_stock * data2.maxPerUnit;
+                            }else{
+                                TotalQty = data2.product_stock * 1;
+                                console.log(TotalQty)
+                            }
+                        }
+                        
                         theUnit = data2.secondary_unit;
                     }
+
+                    const the_actual_qty = data2.actual_qty ?? "";
+                    const the_actual_uom = data2.actual_uom ?? "";
+
                     var dataLocation = dataCheckingRack(data2.roomNamed, data2.storage+data2.rack+data2.level+data2.isle+data2.type[0]+data2.pallet);
 
                     var row = $('<tr id="trtable'+x+'">');
@@ -1309,8 +1326,8 @@ function checkExpiration(expirationDate, x) {
                     row.append($('<td>').html('<input type="text" class="form-control" style="width: 80px;" name="quantity" id="quantity'+x+'" onkeyup="ConversionKit('+x+','+data2.maxPerUnit+')" value="">'));
                     // row.append($('<td>').html('<input type="text" class="form-control" style="width: 80px;" name="actual_qty" id="actual_qty'+x+'" value="'+ data2.actual_qty +'">'));
                     row.append($('<td>').html('<input type="text" class="form-control" style="width: 130px;" name="unitodmeasure" value="' + theUnit + '" readonly>'));
-                    row.append($('<td>').html('<input type="text" class="form-control" style="width: 80px;" name="actual_qty" id="actual_qty'+x+'" value="'+ data2.actual_qty +'">'));
-                    row.append($('<td>').html('<input type="text" class="form-control" style="width: 80px;" name="actual_uom" id="actual_uom'+x+'" value="'+ data2.actual_uom +'">'));
+                    row.append($('<td>').html('<input type="text" class="form-control" style="width: 80px;" name="actual_qty" id="actual_qty'+x+'" value="'+ the_actual_qty +'">'));
+                    row.append($('<td>').html('<input type="text" class="form-control" style="width: 80px;" name="actual_uom" id="actual_uom'+x+'" value="'+ the_actual_uom +'">'));
                     row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="test" id="Conver'+x+'" value="" readonly>'));
                         
                     row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="RoomAssigned" id="RoomAssigned'+x+'" value="'+data2.roomNamed+'" readonly>'));
