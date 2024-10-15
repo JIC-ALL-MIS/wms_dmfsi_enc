@@ -610,6 +610,7 @@
                                                                         <th scope="col">Assign Room</th>
                                                                         <th scope="col">Type </th>
                                                                         <th scope="col">Location </th>
+                                                                        <th scope="col">Delivery Date </th>
                                                                         <th scope="col">Delivery Code </th>
                                                                         <!-- <th scope="col">Bin </th>
                                                                         <th scope="col">Type </th>
@@ -1668,6 +1669,7 @@
                             // row.append($('<td>').html('<select class="form-control" name="type" level="type'+lastIncre+'" id="type' + lastIncre + '" style="width: 150px;" onchange="BayBin('+lastIncre+', \"'+RoomAssign+'\")"><option value="L">Level</option><option value="F">Floor</option></select>'));
                             row.append($('<td>').html('<select class="form-control" name="type" level="type' + lastIncre + '" id="type' + lastIncre + '" style="width: 150px;" onchange="BayBin(' + lastIncre + ', \'' + RoomAssign + '\')"></select>'));
                             row.append($('<td>').html('<select class="form-control" name="prod_level" level="levelOslie'+lastIncre+'" id="prod_level' + lastIncre + '" style="width: 150px;"></select>'));
+                            row.append($('<td>').html('<input type="date" class="form-control" style="width: 150px;" name="deliverydate" id="deliverydate" value="">'));
                             row.append($('<td>').html('<input type="text" class="form-control" style="width: 150px;" name="deliverycode" id="deliverycode" value="">'));
                             row.append($('<td>').html('<button type="button" class="btn btn-square btn-outline-danger" id="remove">Remove</button>'));
                             
