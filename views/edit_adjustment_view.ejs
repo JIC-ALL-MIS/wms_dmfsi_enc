@@ -185,130 +185,68 @@
 
                                                                         
 
-                                                                      
+                                                                        <td class="align-top">
+                                                                            <input type="text" name="adjust_qty"
+                                                                            id="adjust_qty<%= x %>" class="form-control edit_product_name" style="width: 80px;" value="<%= adjustment.adjust_qty %>" readonly>
+                                                                        </td>
 
 
-                                                                        <% stock.forEach((stocks) => { %>
-                                                                            
-                                                                            
-                                                                            <% console.log(stocks) %>
-                                                                            <% if(adjustment.product_name == stocks.name  && adjustment.floorlevel == stocks.floorlevel && adjustment.type == stocks.type && adjustment.bin == stocks.bin && adjustment.bay == stocks.bay && adjustment.rack == stocks.rack && adjustment.storage == stocks.storage && adjustment.room_names == stocks.room) { %>
-
-                                                                                
-
-                                                                                <td class="align-top">
-                                                                                    <input type="text" name="adjust_qty"
-                                                                                    id="adjust_qty<%= x %>" class="form-control edit_product_name" style="width: 80px;"  oninput="myFunctionCompute('<%= x %>')" onkeyup="ValidationForMaxQTY('<%= stocks.product_code %>', '<%= x %>')"  value="<%= adjustment.adjust_qty %>" readonly>
-                                                                                </td>
-
-                                                                                <td class="align-top">
-                                                                                    <input type="text" name="batch_code"
-                                                                                    id="batch_code" class="form-control batch_code" style="width: 150px;" value="<%= adjustment.batch_code %>" readonly>
-                                                                                </td>
-
-                                                                                <td class="align-top">
-                                                                                    <input type="date" name="production_date" class="form-control" style="width: 150px;" id="production_date" value="<%= adjustment.production_date %>" readonly> 
-                                                                                </td>
-
-                                                                                <td class="align-top">
-                                                                                    <input type="date" name="expiry_date" class="form-control" style="width: 150px;" id="expiry_date" value="<%= adjustment.expiry_date %>" readonly> 
-                                                                                </td>
-
-                                                                                <td class="align-top">
-                                                                                    <input type="text" name="stock"
-                                                                                    id="stock<%= x %>" class="form-control edit_product_name" style="width: 80px;"  value="<%= stocks.product_stock %>" readonly>
-                                                                                </td>
+                                                                        <td class="align-top">
+                                                                            <input type="text" name="batch_code"
+                                                                            id="batch_code" class="form-control batch_code" style="width: 150px;" value="<%= adjustment.batch_code %>" readonly>
+                                                                        </td>
 
 
-                                                                                <td class="align-top">
-                                                                                    <select class="form-control adjustment_product" style="width: 100px;"  name="types" id="types<%= x %>" readonly >
-                                                                                        <option value="minus" <%=adjustment.types=="minus" ? "selected" : "" %> >Subtract</option>
-        
-                                                                                        <option value="add" <%=adjustment.types=="add" ? "selected" : "" %> >Add</option>
-                                                                                    </select>
-                                                                                </td>
+                                                                        <td class="align-top">
+                                                                            <input type="date" name="production_date" class="form-control" style="width: 150px;" id="production_date" value="<%= adjustment.production_date %>" readonly> 
+                                                                        </td>
 
-                                                                                <td class="align-top">
-                                                                                    <input type="text" name="unit"
-                                                                                    id="unit" class="form-control unit" style="width: 100px;"  value="<%= adjustment.unit %>" readonly>
-                                                                                </td>
+                                                                        <td class="align-top">
+                                                                            <input type="date" name="expiry_date" class="form-control" style="width: 150px;" id="expiry_date" value="<%= adjustment.expiry_date %>" readonly> 
+                                                                        </td>
 
 
-                                                                                <input type="hidden" name="Secondary_units"
-                                                                                    id="Secondary_units" class="form-control Secondary_units" value="<%= adjustment.secondary_unit %>" readonly>
+                                                                        <td class="align-top">
+                                                                            <input type="text" name="stock"
+                                                                            id="stock<%= x %>" class="form-control edit_product_name" style="width: 80px;"  value="<%= adjustment.stockBefore %>" readonly>
+                                                                        </td>
 
-                                                                                <td class="align-top">
-                                                                                    <input type="text" name="rooms_name"
-                                                                                    id="rooms_name" class="form-control rooms_name" style="width: 100px;"  value="<%= adjustment.room_names %>" readonly>
-                                                                                </td>
+                                                                        <td class="align-top">
+                                                                            <select class="form-control adjustment_product" style="width: 100px;"  name="types" id="types<%= x %>" readonly >
+                                                                                <option value="minus" <%=adjustment.types=="minus" ? "selected" : "" %> >Subtract</option>
 
-                                                                                <td class="align-top">
-                                                                                    <% var Location =  adjustment.storage + adjustment.rack + adjustment.bay + adjustment.bin + adjustment.type[0] + adjustment.floorlevel%>
-                                                                                    <input type="text" name="level"
-                                                                                    id="level" class="form-control edit_product_name" style="width: 100px;"  value="<%= Location %>" readonly>
-                                                                                </td>
-        
-                                                                                <!-- <td class="align-top">
-                                                                                    <input type="text" name="isle"
-                                                                                    id="isle" class="form-control edit_product_name" style="width: 80px;"  value="<%= adjustment.bin %>" readonly>
-                                                                                </td>
+                                                                                <option value="add" <%=adjustment.types=="add" ? "selected" : "" %> >Add</option>
+                                                                            </select>
+                                                                        </td>
 
-                                                                                <td class="align-top">
-                                                                                    <input type="text" name="type"
-                                                                                    id="type" class="form-control edit_product_name" style="width: 80px;"  value="<%= adjustment.type %>" readonly>
-                                                                                </td>
-        
-                                                                                <td class="align-top">
-                                                                                    <input type="text" name="pallet"
-                                                                                    id="pallet" class="form-control edit_product_name" style="width: 80px;"  value="<%= adjustment.floorlevel %>" readonly>
-                                                                                </td> -->
-        
-                
-                                                                                <td class="align-top">
-                                                                                    <input type="text" name="new_adjust_qty"
-                                                                                    id="new_adjust_qty<%= x %>" class="form-control edit_product_name" style="width: 120px;"  value="<%= adjustment.new_adjust_qty %>"  readonly>
-                                                                                </td>
-
-
-                                                                                <!-- <input type="hidden" name="last_increment" id="last_increment" value="<%= x %>" readonly> -->
-                                                                                <input type="hidden" name="MaxStocks_data"
-                                                                                id="MaxStocks_data<%= stocks.product_code + x %>" value="<%= stocks.maxProducts %>" readonly>
-                                                                                <input type="hidden" name="MaxStocks_data2"
-                                                                                id="MaxStocks_data2<%= stocks.product_code + x %>" value="<%= stocks.maxProducts %>" readonly>
-
-
-                                                                                <input type="hidden" name="storage"
-                                                                                id="storage" value="<%= stocks.storage %>" readonly>
-
-
-                                                                                <input type="hidden" name="rak"
-                                                                                id="rak" value="<%= stocks.rack %>" readonly>
-
-
-                                                                                <input type="hidden" name="maxperunit"
-                                                                                id="maxperunit" value="<%= stocks.maxPerUnit %>" readonly>
-
-                                                                                <input type="hidden" name="prod_cat"
-                                                                                id="prod_cat" value="<%= adjustment.prod_cat %>" readonly>
-
-
-                                                                                <input type="hidden" name="primary_unit"
-                                                                                id="primary_unit" value="<%= adjustment.unit %>" readonly>
-
-                                                                                <input type="hidden" name="secondary_unit"
-                                                                                id="secondary_unit" value="<%= adjustment.secondary_unit %>" readonly>
-                                                                                
-                                                                                
-                                                                            <% } %>
-                                                                            
-                                                                           
-                                                                    
-                                                                        <% }) %>
                                                                         
+                                                                        <td class="align-top">
+                                                                            <input type="text" name="unit"
+                                                                            id="unit" class="form-control unit" style="width: 100px;"  value="<%= adjustment.unit %>" readonly>
+                                                                        </td>
 
 
-                                                               
+                                                                        <input type="hidden" name="Secondary_units"
+                                                                            id="Secondary_units" class="form-control Secondary_units" value="<%= adjustment.secondary_unit %>" readonly>
 
+                                                                        <td class="align-top">
+                                                                            <input type="text" name="rooms_name"
+                                                                            id="rooms_name" class="form-control rooms_name" style="width: 100px;"  value="<%= adjustment.room_names %>" readonly>
+                                                                        </td>
+
+                                                                        <td class="align-top">
+                                                                            <% var Location =  adjustment.storage + adjustment.rack + adjustment.bay + adjustment.bin + adjustment.type[0] + adjustment.floorlevel%>
+                                                                            <input type="text" name="level"
+                                                                            id="level" class="form-control edit_product_name" style="width: 100px;"  value="<%= Location %>" readonly>
+                                                                        </td>
+
+                                                                        <td class="align-top">
+                                                                            <input type="text" name="new_adjust_qty"
+                                                                            id="new_adjust_qty<%= x %>" class="form-control edit_product_name" style="width: 120px;"  value="<%= adjustment.new_adjust_qty %>"  readonly>
+                                                                        </td>
+
+
+                                                                        <% console.log(adjustment) %>
                                                                     </tr>
                                                                     
 
