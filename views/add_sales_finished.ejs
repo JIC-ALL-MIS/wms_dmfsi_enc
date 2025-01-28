@@ -1122,7 +1122,7 @@ $(document).ready(function() {
           $.each(response, function(index, data1) {
             data1.forEach((data) => {
                 console.log(data.computeUsed, data.product_stock)
-            // if(data.product_stock > 0){
+            if(data.product_stock > 0){
 
                 
                 var Instock = data.product_stock;
@@ -1263,7 +1263,7 @@ $(document).ready(function() {
                 x++;
 
                 
-            // }
+            }
          })    
           });
           

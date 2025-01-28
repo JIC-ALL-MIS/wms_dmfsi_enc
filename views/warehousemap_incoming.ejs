@@ -4216,8 +4216,9 @@
                     }
                     var dataItems ='';
                     if(F[1] > 0){ color1 = 'red' }else{ color1 = 'green' }
+                    var numberFormat = new Intl.NumberFormat().format(F[1]) 
                     dataItems += '<tr>';
-                    dataItems += '<td style="width: 500px; height: 100px"rowspan="10" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[1] ? true : false) + '"><center><strong><h1>ANTARCTICA</h1></strong></center><center><div style="background-color: '+color1+'; width: 200px; height: 200px; margin: 0 auto;" ><b style="color:white"><p style="font-size:100px">' + F[1] + '</p></b></div></center><div class="emailcontainer"><table style="width: 100%; background-color: rgb(141, 21, 21);" ><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td><td>Production Date</td><td>Expiration Date</td><td>Batch Code</td></tr></thead><tbody>' + datahoverItem[1] + '</tbody></table></div></td>';
+                    dataItems += '<td style="width: 800px; height: 800px" rowspan="10" id="text-to-hover" class="button-text contactme" data-has-data="' + (datahoverItem[1] ? true : false) + '"><center><strong><h1>ANTARCTICA</h1></strong></center><center><div style="background-color: '+color1+'; width: 500px; height: 200px; margin: 0 auto;" ><b style="color:white"><p style="font-size:100px">' + numberFormat + '</p></b></div></center><div class="emailcontainer"><table style="width: 100%; background-color: rgb(141, 21, 21);" ><thead><tr><td>Item Code</td><td>Product Name</td><td>Qty</td><td>Production Date</td><td>Expiration Date</td><td>Batch Code</td></tr></thead><tbody>' + datahoverItem[1] + '</tbody></table></div></td>';
                 
                     dataItems += '</tr>';
 
