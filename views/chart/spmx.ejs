@@ -1,0 +1,254 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Spices / Mix</h4>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Incoming</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <canvas id="myLineChart_spmx" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Outgoing</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <canvas id="myLineChart2_spmx" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+        var ctx = document.getElementById('myLineChart_spmx').getContext('2d');
+        var ctx1 = document.getElementById('myLineChart2_spmx').getContext('2d');
+
+
+        function fetchData_spmx() {
+            $.ajax({
+                url: './spmx_line', // Replace 'your_data_endpoint_url_here' with your actual data endpoint URL
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    updateChart_spx(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+        function fetchDataOut_spmx() {
+            // Make an AJAX request
+            $.ajax({
+                url: './spmx_out_line', // Replace 'your_data_endpoint_url_here' with your actual data endpoint URL
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    updateChartOut_spmx(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+
+        function updateChart_spx(data) {
+            var labels = [];
+            var quantities = [];
+            var quantities2 = [];
+            var quantities3 = [];
+
+            // Extract labels and quantities from fetched data
+            data.forEach(function(item) {
+                    console.log(item)
+                var dob = new Date(item.date);
+                var dobArr = dob.toDateString().split(' ');
+                var dobFormat = dobArr[2] + ' ' + dobArr[1] + ' ' + dobArr[3];
+                // alert(dobFormat); 
+                labels.push(dobFormat);
+                quantities.push(item.spicemix_spmx_qty);
+                quantities2.push(item.extenders_spmx_qty);
+                quantities3.push(item.curing_spmx_qty);
+            });
+
+            // Update chart data with fetched data
+            myLineChart_spmx.data.labels = labels;
+            myLineChart_spmx.data.datasets[0].data = quantities;
+            myLineChart_spmx.data.datasets[1].data = quantities2;
+            myLineChart_spmx.data.datasets[2].data = quantities3;
+            console.log(myLineChart_spmx.data)
+            // Update the chart
+            myLineChart.update();
+        }
+        function updateChartOut_spmx(data) {
+            var labels = [];
+            var quantities = [];
+            var quantities2 = [];
+            var quantities3 = [];
+
+            // Extract labels and quantities from fetched data
+            data.forEach(function(item) {
+                
+                var dob = new Date(item.date);
+                var dobArr = dob.toDateString().split(' ');
+                var dobFormat = dobArr[2] + ' ' + dobArr[1] + ' ' + dobArr[3];
+                // alert(dobFormat); 
+                labels.push(dobFormat);
+                quantities.push(item.spicemix_spmx_qty);
+                quantities2.push(item.extenders_spmx_qty);
+                quantities3.push(item.curing_spmx_qty);
+            });
+
+            // Update chart data with fetched data
+            myLineChart1_spmx.data.labels = labels;
+            myLineChart1.data.datasets[0].data = quantities;
+            myLineChart1_spmx.data.datasets[1].data = quantities2;
+            myLineChart1_spmx.data.datasets[2].data = quantities3;
+
+            // Update the chart
+            myLineChart1.update();
+        }
+
+        fetchData_spmx();
+        fetchDataOut_spmx();
+        var options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            // title: {
+            //     display: true,
+            //     text: 'Chart.js Line Chart'
+            // },
+            
+        };
+
+
+
+        var myLineChart_spmx = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'SPICEMIX CODE',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [],
+                    fill: false,
+                    pointStyle: 'rectRot',
+                    pointRadius: 5,
+                    pointBorderColor: 'rgb(0, 0, 0)',
+                    borderWidth: 1,
+                },
+                {
+                    label: 'EXTENDERS CODE',
+                    backgroundColor: 'rgb(173, 216, 230)',
+                    borderColor: 'rgb(173, 216, 230)',
+                    data: [],
+                    fill: false,
+                    pointStyle: 'rectRot',
+                    pointRadius: 5,
+                    pointBorderColor: 'rgb(0, 0, 0)',
+                    borderWidth: 1,
+                }
+                ,
+                {
+                    label: 'CURING SALT CODE',
+                    backgroundColor: 'green',
+                    borderColor: 'green',
+                    data: [],
+                    fill: false,
+                    pointStyle: 'rectRot',
+                    pointRadius: 5,
+                    pointBorderColor: 'rgb(0, 0, 0)',
+                    borderWidth: 1,
+                }
+            ]
+            },
+            options: options
+        });
+
+
+        var myLineChart1_spmx = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                {
+                    label: 'SPICEMIX CODE',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [],
+                    fill: false,
+                    pointStyle: 'rectRot',
+                    pointRadius: 5,
+                    pointBorderColor: 'rgb(0, 0, 0)',
+                    borderWidth: 1,
+                },
+                {
+                    label: 'EXTENDERS CODE',
+                    backgroundColor: 'rgb(173, 216, 230)',
+                    borderColor: 'rgb(173, 216, 230)',
+                    data: [],
+                    fill: false,
+                    pointStyle: 'rectRot',
+                    pointRadius: 5,
+                    pointBorderColor: 'rgb(0, 0, 0)',
+                    borderWidth: 1,
+                }
+                ,
+                {
+                    label: 'CURING SALT CODE',
+                    backgroundColor: 'green',
+                    borderColor: 'green',
+                    data: [],
+                    fill: false,
+                    pointStyle: 'rectRot',
+                    pointRadius: 5,
+                    pointBorderColor: 'rgb(0, 0, 0)',
+                    borderWidth: 1,
+                }
+            ]
+            },
+            options: options
+        });
+
+
+        async function fetchDataAndUpdateChart_spmx(fetchFunction, chart) {
+            const newData = await fetchFunction(); // Fetch data using the provided fetchFunction
+            await fetchFunction(); 
+        }
+
+
+        function startDataRefresh_spmx() {
+            const pollingInterval = 5000;
+            // Call fetchDataAndUpdateChart for each data source and its corresponding chart
+            setInterval(() => fetchDataAndUpdateChart_spmx(fetchData, ctx), pollingInterval);
+            setInterval(() => fetchDataAndUpdateChart_spmx(fetchDataOut, ctx1), pollingInterval);
+        }
+
+        startDataRefresh_spmx();
+</script>

@@ -136,20 +136,19 @@
 
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table id="example" class="table table-responsive-sm">
+                                            <table id="example" class="table table-responsive-sm text-center" style="width: auto;">
                                                 <thead>
                                                     <tr>
 
-                                                        <th><%= language.image %> </th>
-                                                        <th>Item Code</th>
-                                                        <th>Item Description</th>
-                                                        <th>Primary Barcode</th>
-                                                        <th>Secondary Barcode</th>
-                                                        <th><%= language.category %> </th>
-                                                        <th><%= language.brands %> </th>
-                                                        <th><%= language.alert_qty %> </th>
-                                                        <th><%= language.units %> </th>
-                                                        <th><%= language.edit %> </th>
+                                                        <th>IMAGE</th>
+                                                        <th>PRODUCT CODE</th>
+                                                        <th>SPICEMIX CODE</th>
+                                                        <th>EXTENDERS CODE</th>
+                                                        <th>CURING SALT CODE </th>
+                                                        <th>CATEGORY </th>
+                                                        <th>BRANDS </th>
+                                                        <th>UNIT </th>
+                                                        <th>EDIT</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="tBodyRs">
@@ -161,18 +160,12 @@
                                                             </td>
 
 
-                                                            <td> <%= alldata.product_code %> </td>
-
-                                                            <td> <%= alldata.name %> </td>
+                                                            <td> <%= alldata.product_code_spmx %> </td>
                                                             <td> <%= alldata.primary_code %> </td>
                                                             <td> <%= alldata.secondary_code %> </td>
+                                                            <td> <%= alldata.product_code %> </td>
                                                             <td> <%= alldata.category %> </td>
-
                                                             <td> <%= alldata.brand %> </td>
-
-
-                                                            <td> <%= alldata.alertquantity %> </td>
-
                                                             <td> <%= alldata.unit %> </td>
                                                             <td>
                                                                 <a href="/products/view/<%= alldata._id %>" id="procatid" data-id="<%= alldata._id %>"

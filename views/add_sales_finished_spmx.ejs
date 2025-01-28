@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head'); -%>
+
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+        
+        /* The Modal (background) */
+        .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 3; /* Sit on top */
+          padding-top: 100px; /* Location of the box */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+        
+        /* Modal Content */
+        .modal-content {
+          position: relative;
+          background-color: #fefefe;
+          margin: auto;
+          padding: 0;
+          border: 1px solid #888;
+          width: 50%;
+          box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+          -webkit-animation-name: animatetop;
+          -webkit-animation-duration: 0.4s;
+          animation-name: animatetop;
+          animation-duration: 0.4s
+        }
+        
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+          from {top:-300px; opacity:0} 
+          to {top:0; opacity:1}
+        }
+        
+        @keyframes animatetop {
+          from {top:-300px; opacity:0}
+          to {top:0; opacity:1}
+        }
+        
+        /* The Close Button */
+        .close {
+          color: white;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        
+        .modal-header {
+          padding: 2px 16px;
+          background-color: rgba(34, 34, 51, 0.705);
+          color: white;
+        }
+        
+        .modal-body {padding: 2px 16px;}
+        
+        .modal-footer {
+          padding: 2px 16px;
+          background-color: rgba(34, 34, 51, 0.705);
+          color: white;
+          display: flex;
+          justify-content: center;
+          display: grid;
+            place-items: center;
+        }
+    </style>
+
+    <script>
+    function saveAndContinue() {
+
+        // var strTemp = '';
+        // var Invoice = document.getElementById("invoice");
+        // var SCRN = document.getElementById("SCRN");
+        // // var suppliers = document.getElementById("suppliers");
+        // var date = document.getElementById("date");
+        // var warehouse_name = document.getElementById("warehouse_name");
+        // // var Room_name = document.getElementById("Room_name");
+        // var modal = document.getElementById("myModal");
+
+        // if(Invoice.value.length == 0){
+        //     strTemp += "Document Number is required. <br>" 
+        //     Invoice.style.borderColor = "red";
+        //     Invoice.focus()
+        // }else{
+        //     Invoice.style.borderColor = "";
+        // }
+
+        // if(SCRN.value.length == 0){
+        //     strTemp += "Supplier/Client Ref Number is required. <br>"
+        //     SCRN.style.borderColor = "red";
+        //     SCRN.focus()
+        // }else{
+        //     SCRN.style.borderColor = "";
+        // }
+
+        // // if(suppliers.value.length == 0){
+        // //     strTemp += "Supplier is required. <br>"
+        // //     suppliers.style.borderColor = "red";
+        // //     suppliers.focus()
+        // // }else{
+        // //     suppliers.style.borderColor = "";
+        // // }
+
+        // if(date.value.length == 0){
+        //     strTemp += "Date received is required. <br>"
+        //     date.style.borderColor = "red";
+        //     date.focus()
+        // }else{
+        //     date.style.borderColor = "";
+        // }
+
+        // if(warehouse_name.value.length == 0){
+        //     strTemp += "Warehouse is required. <br>"
+        //     warehouse_name.style.borderColor = "red";
+        //     warehouse_name.focus()
+        // }else{
+        //     warehouse_name.style.borderColor = "";
+        // }
+
+        // // if(Room_name.value.length == 0){
+        // //     strTemp += "Room  is required. <br>"
+        // //     Room_name.style.borderColor = "red";
+        // //     Room_name.focus()
+        // // }else{
+        // //     Room_name.style.borderColor = "";
+        // // }
+
+    
+        // var product_date = document.getElementsByName("product_date");
+
+        // for (let index = 0; index < product_date.length; index++) {
+        //     const inputElement  = product_date[index];
+
+        //     if(inputElement.value.length == 0){
+        //         modal.style.display = "none";
+        //         strTemp += "Production date  is required. <br>"
+        //         inputElement.style.borderColor = "red";
+        //         inputElement.focus()
+        //     }else{
+        //         inputElement.style.borderColor = "";
+        //     }
+            
+        // }
+
+
+        // var prod_qty = document.getElementsByName("prod_qty");
+
+        // for (let index = 0; index < prod_qty.length; index++) {
+        //     const inputElement  = prod_qty[index];
+
+        //     if(inputElement.value.length == 0){
+        //         modal.style.display = "none";
+        //         strTemp += "Quantity  is required. <br>"
+        //         inputElement.style.borderColor = "red";
+        //         inputElement.focus()
+        //     }else{
+        //         inputElement.style.borderColor = "";
+        //     }
+            
+        // }
+
+
+        // var expiry_date = document.getElementsByName("expiry_date");
+
+        // for (let index = 0; index < expiry_date.length; index++) {
+        //     const inputElement  = expiry_date[index];
+
+        //     if(inputElement.value.length == 0){
+        //         modal.style.display = "none";
+        //         strTemp += "Expiry date  is required. <br>"
+        //         inputElement.style.borderColor = "red";
+        //         inputElement.focus()
+        //     }else{
+        //         inputElement.style.borderColor = "";
+        //     }
+            
+        // }
+
+
+        // var batch_code = document.getElementsByName("batch_code");
+
+        // for (let index = 0; index < batch_code.length; index++) {
+        //     const inputElement  = batch_code[index];
+
+        //     if(inputElement.value.length == 0){
+        //         modal.style.display = "none";
+        //         strTemp += "Batch Code is required. <br>"
+        //         inputElement.style.borderColor = "red";
+        //         inputElement.focus()
+        //     }else{
+        //         inputElement.style.borderColor = "";
+        //     }
+            
+        // }
+
+        // var table = document.getElementById("purchases_tbl_new");
+        // var noofrow = table.rows.length -1;
+
+        // if(noofrow == 0){
+        //     strTemp += "Product list is empty. <br>"
+        //     table.style.borderColor = "red";
+        //     document.getElementById("product_code").focus()
+        // }else{
+        //     table.style.borderColor = "";
+        // }
+
+        // if(strTemp.length > 0){
+        //     modal.style.display = "none";
+        //     Swal.fire(
+        //     'Required ',
+        //     "<h5>" + strTemp + "</h5>",
+        //     'warning'
+        //     )
+        //     return;
+        // }
+
+        
+        // Swal.fire({
+        //         icon: 'warning',
+        //         title: 'Are you sure want to finalize?',
+        //         text: 'Warning: After finalizing the data, it becomes locked and unmodifiable. ',
+        //         showDenyButton: true,
+        //         showCancelButton: false,
+        //         confirmButtonText: 'Save',
+        //         denyButtonText: `Don't save`,
+        //     }).then((result) => {
+           
+        //     if (result.isConfirmed) {
+        //         document.getElementById("form").submit();
+        //     } else if (result.isDenied) {
+        //         Swal.fire('Changes are not saved', '', 'info')
+        //     }
+        //     })
+
+        document.getElementById("form").submit();
+        modal.style.display = "none";
+        Swal.fire({
+        title: "Loading...",
+        html: "Please wait a moment",
+        allowOutsideClick: false, 
+        })
+        Swal.showLoading()
+    }
+    function clearModalContent() {
+    // Reset the values of elements with specific IDs to empty
+    document.getElementById("SRNC").innerHTML = "";
+    document.getElementById("PONumber").innerHTML = "";
+    document.getElementById("supplier").innerHTML = "";
+    document.getElementById("dateRec").innerHTML = "";
+    document.getElementById("houseware").innerHTML = "";
+    document.getElementById("moor").innerHTML = "";
+
+    // Clear the table inside the modal
+    var modalTable = document.getElementById("purchases_tbl_modal");
+    modalTable.innerHTML = "";
+    }
+
+
+        function showConfirmation() {
+        var html = '';
+        var NodeList = document.getElementsByName("prod_code");
+        // var NodeList2 = document.getElementsByName("prod_name");
+        var prod_unit = document.getElementsByName("prod_unit");
+        var prod_qty = document.getElementsByName("prod_qty");
+        
+        var batch_code = document.getElementsByName("batch_code");
+        var product_date = document.getElementsByName("product_date");
+        var expiry_date = document.getElementsByName("expiry_date");
+        var prod_level = document.getElementsByName("prod_level");
+        var Conver = document.getElementsByName("test");
+
+        var nodeVal = '';
+        var productName = '';
+        var valprod_unit = '';
+        var valprod_qty = '';
+        var valbatch_code = '';
+        var valproduct_date = '';
+        var valexpiry_date = '';
+        var valprod_level = '';
+        var valConver = '';
+
+        // for (var x = 0; x < NodeList.length; x++) {
+        //     nodeVal = NodeList[x].value;
+        //     // productName = NodeList2[x].value;
+        //     valprod_unit = prod_unit[x].value;
+        //     valprod_qty = prod_qty[x].value;
+        //     valbatch_code = batch_code[x].value;
+        //     valproduct_date = product_date[x].value;
+        //     valexpiry_date = expiry_date[x].value;
+        //     valConver = Conver[x].value;
+
+        //     const selectedIndex = prod_level[x].selectedIndex;
+        //     const selectedValue = prod_level[x].value;
+        //     valprod_level = prod_level[x].options[selectedIndex].text;
+            
+        //     html += '<tr>';
+        //     html += '<td>';
+        //     html += '<p>' + nodeVal + '</p>';
+        //     html += '</td>';
+
+        //     // html += '<td>';
+        //     // html += productName;
+        //     // html += '</td>';
+
+        //     html += '<td>';
+        //     html += valbatch_code;
+        //     html += '</td>';
+
+        //     html += '<td>';
+        //     html += valproduct_date;
+        //     html += '</td>';
+
+        //     html += '<td>';
+        //     html += valexpiry_date;
+        //     html += '</td>';
+
+        //     html += '<td>';
+        //     html += valprod_qty;
+        //     html += '</td>';
+
+        //     html += '<td>';
+        //     html += valprod_unit;
+        //     html += '</td>';
+            
+        //     html += '<td>';
+        //     html += valConver;
+        //     html += '</td>';
+
+        //     html += '<td>';
+        //     html += valprod_level;
+        //     html += '</td>';
+
+        //     html += '</tr>';
+        // }
+
+        var htmlfinal = "";
+        htmlfinal += '<thead class="thead-primary">';
+        htmlfinal += '<tr>';
+        htmlfinal += '<th scope="col">Item Code </th>';
+        htmlfinal += '<th scope="col">Item Description </th>';
+        htmlfinal += '<th scope="col">Batch Code </th>';
+        htmlfinal += '<th scope="col">Production Date </th>';
+        htmlfinal += '<th scope="col">Expiry Date </th>';
+        htmlfinal += '<th scope="col">Quantity </th>';
+        htmlfinal += '<th scope="col">Unit of Measure </th>';
+        htmlfinal += '<th scope="col">Conversion</th>';
+        htmlfinal += '<th scope="col">Bin </th>';
+        htmlfinal += '</tr>';
+        htmlfinal += '</thead>';
+        htmlfinal += '<tbody id="tblPage_new_modal">';
+        htmlfinal += html;
+        htmlfinal += '</tbody>';
+
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+
+        modal.style.display = "block";
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "block";
+            }
+        };
+
+        var modalContent = document.getElementById("purchases_tbl_modal");
+        modalContent.innerHTML = "";
+        document.getElementById("SRNC").innerHTML = document.getElementById("SCRN").value;
+        document.getElementById("PONumber").innerHTML =  document.getElementById("PO_number").value;
+        document.getElementById("dateRec").innerHTML =  document.getElementById("date").value;
+        document.getElementById("houseware").innerHTML =  document.getElementById("warehouse_name").value;
+        document.getElementById("Inv").innerHTML = document.getElementById("invoice").value;
+
+
+        modalContent.innerHTML = htmlfinal;
+        
+    }
+
+
+    </script>
+</head>
+
+<body onload="" >
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <%- include('./partials/header_logo'); -%>
+
+            <!--**********************************
+            Nav header end
+        ***********************************-->
+
+            <!--**********************************
+            Header start
+        ***********************************-->
+            <%- include('./partials/header',{titel: language.sales + " for Spices / Mix"}); -%>
+
+                <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+                <!--**********************************
+            Sidebar start
+        ***********************************-->
+                <%- include('./partials/sidebar'); -%>
+
+                    <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+                    <!--**********************************
+            Content body start
+        ***********************************-->
+                    <div class="content-body">
+                        <div class="container-fluid">
+
+                            <!-- row -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title"><%= language.add_sales %> </h4>
+                                            <button type="button" class="btn btn-rounded btn-outline-info"
+                                                onclick="history.back()"><i class="la la-undo"></i> <%= language.go_back %> </button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-validation">
+
+                                                <form class="needs-validation"
+                                                    action="/all_sales_finished/view/add_sales_spmx" method="post" id="form">
+
+                                                    <div class="row">
+                                                        <div class="col-xl-4">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">Date received  <span
+                                                                        class="text-red">*</span></label>
+                                                                <input type="date" name="date" class="form-control"
+                                                                    id="date" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-4">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no"> Supplier/Client Ref Number <span
+                                                                        class="text-red"> *</span></label>
+                                                                <input type="text" name="SCRN" class="form-control" value=""
+                                                                    id="SCRN" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label">FTGS number</label>
+                                                                <input type="text" class="form-control" name="PO_number" id="PO_number">
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-xl-3">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">From <%= language.warehouse %>  <span
+                                                                        class="text-red">*</span></label>
+                                                                <select class="form-control" name="warehouse_name" id="warehouse_name" onchange="SelectRoom();" required>
+                                                                    <option value selected disabled>Select One</option>
+                                                                    <% warehouse.forEach((warehouse)=> { %>
+                                                                        <option value="<%= warehouse.name %>">
+                                                                            <%= warehouse.name %>
+                                                                        </option>
+                                                                        <% }) %>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-3">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">From Room  <span
+                                                                        class="text-red">*</span></label>
+                                                                <div id="showRoom">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- <div class="col-xl-3">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">To <%= language.warehouse %>  <span
+                                                                        class="text-red">*</span></label>
+                                                                <select class="form-control" name="to_warehouse" id="to_warehouse" onchange="To_SelectRoom();" required>
+                                                                    <option value selected disabled>Select One</option>
+                                                                    <% warehouse.forEach((warehouse)=> { %>
+                                                                        <option value="<%= warehouse.name %>">
+                                                                            <%= warehouse.name %>
+                                                                        </option>
+                                                                        <% }) %>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-3">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">To Room  <span
+                                                                        class="text-red">*</span></label>
+                                                                <div id="to_showRoom">
+                                                                </div>
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                    
+                                                    <input type="hidden" id="choice-dropdown" value="Primary">
+                                                    <a id="toggleButton" class="btn btn-primary" onclick="toggleText()">Start</a>
+
+                                                    <div class="col-xl-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table primary-table-bordered text-center" id="purchases_tbl_new">
+                                                                <thead class="thead-primary">
+                                                                    <tr>
+                                                                        <th scope="col">PRODUCT CODE </th>
+                                                                        <th scope="col">SPICEMIX CODE </th>
+                                                                        <th scope="col">QTY STOCK</th>
+                                                                        <th scope="col">QTY </th>
+                                                                        <th scope="col">EXTENDERS CODE </th>
+                                                                        <th scope="col">QTY STOCK</th>
+                                                                        <th scope="col">QTY </th>
+                                                                        <th scope="col">CURING SALT CODE </th>
+                                                                        <th scope="col">QTY STOCK</th>
+                                                                        <th scope="col">QTY </th>
+                                                                        <th scope="col">UNITS</th>
+                                                                        <th scope="col">BRAND </th>
+                                                                        <th scope="col">PRODUCT CATEGORY</th>
+                                                                        <!-- <th scope="col">PRODUCTION DATE </th>
+                                                                        <th scope="col">EXPIRATION DATE </th> -->
+                                                                        <th scope="col">ROOM</th>
+                                                                        <th scope="col">ACTION</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="tblPage_new">
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                    <div class="row">
+                                                        <div class="col-md-8 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="note"><%= language.note %> </label>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="note" id="note" name="note">
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    
+                                                    </div>
+                                                </form>
+
+                                                <div class="row">
+                                                    <button class="btn btn-primary" onclick="showConfirmation()" type="submit"
+                                                        id="purchase_submit"  ><%= language.submit %> </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div id="myModal" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <span class="close">&times;</span>
+                            <h2>Summary</h2>
+                          </div>
+                          <div class="modal-body">
+
+                            <table style="width:50%" >
+                                <thead>
+                                    <tr>
+                                        <td>Document Number:</td>
+                                        <td><b id="Inv"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Supplier/Client Ref Number:</td>
+                                        <td><b id="SRNC"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>PO number: </td>
+                                        <td><b id="PONumber"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Supplier:</td>
+                                        <td><b id="supplier"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Date received:</td>
+                                        <td><b id="dateRec"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Warehouse:</td>
+                                        <td><b id="houseware"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Room:</td>
+                                        <td><b id="moor"></b></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                            
+                          </div>
+                          <div class="table-responsive">
+                            <table class="table primary-table-bordered" style="width:100%" id="purchases_tbl_modal">
+
+                            </table>
+                          </div>
+                          
+                          <div class="modal-footer">
+                            <button class="btn btn-primary" onclick="saveAndContinue()">Save and Continue</button>
+                          </div>
+                        </div>
+                      
+                    </div>
+                    <!--**********************************
+            Content body end
+        ***********************************-->
+
+                    <!--**********************************
+            Footer start
+        ***********************************-->
+                    <%- include('./partials/footer'); -%>
+
+                        <!--**********************************
+            Footer end
+        ***********************************-->
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!-- start Toastr -->
+    <%- include('./partials/toastr'); -%>
+        <!-- End Toastr -->
+
+        <!--**********************************
+        Scripts
+    ***********************************-->
+
+       
+        <%- include('./partials/script'); -%>
+    <script>
+
+    $(function(){
+        var dtToday = new Date();
+        
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if(month < 10)
+            month = '0' + month.toString();
+        if(day < 10)
+            day = '0' + day.toString();
+        
+        var maxDate = year + '-' + month + '-' + day;
+        $('#date').attr('max', maxDate);
+    });
+
+    function To_SelectRoom(){
+        var variable = document.getElementById("to_warehouse").value;
+    var selectRoom = $('#to_showRoom');
+
+    $.ajax({
+        url: '/warehousemap_Income/Rooms_data',
+        method: 'POST',
+        data: { warehouse_name: variable },
+        success: function (response) {
+            selectRoom.empty();
+
+            $.each(response, function (index, data) {
+                var roomName = data.room_name;
+                var roomCode = data.room_name;
+
+                // Create checkbox element instead of option
+                var checkboxElement = $('<input>')
+                    .attr('type', 'checkbox')
+                    .addClass('form-check-input')
+                    .val(roomName)
+                    .attr("name", "room_name")
+                    .attr("id", "room_data"+index)
+                    .attr('roomcode', roomCode);
+
+                // Create label for the checkbox
+                var labelElement = $('<h5>').text(roomName).prepend(checkboxElement);
+
+                // Append the label to the container
+                selectRoom.append(labelElement);
+
+                labelElement.click(function () {
+                    checkboxElement.prop('checked', !checkboxElement.prop('checked'));
+                });
+
+                checkboxElement.click(function (event) {
+                    event.stopPropagation();
+                });
+
+            });
+        }
+    });
+    }
+    
+    function SelectRoom() {
+    var variable = document.getElementById("warehouse_name").value;
+    var selectRoom = $('#showRoom');
+
+    $.ajax({
+        url: '/warehousemap_Income/Rooms_data',
+        method: 'POST',
+        data: { warehouse_name: variable },
+        success: function (response) {
+            selectRoom.empty();
+
+            $.each(response, function (index, data) {
+                var roomName = data.room_name;
+                var roomCode = data.room_name;
+
+                // Create checkbox element instead of option
+                var checkboxElement = $('<input>')
+                    .attr('type', 'checkbox')
+                    .addClass('form-check-input')
+                    .val(roomName)
+                    .attr("name", "to_room_name")
+                    .attr("id", "to_room_name"+index)
+                    .attr('roomcode', roomCode);
+
+                // Create label for the checkbox
+                var labelElement = $('<h5>').text(roomName).prepend(checkboxElement);
+
+                // Append the label to the container
+                selectRoom.append(labelElement);
+
+                labelElement.click(function () {
+                    checkboxElement.prop('checked', !checkboxElement.prop('checked'));
+                });
+
+                checkboxElement.click(function (event) {
+                    event.stopPropagation();
+                });
+
+                // BayBin();
+                checkboxElement.click(function () {
+                    BayBin(index, roomName);
+                });
+            });
+        }
+    });
+}
+
+    function toggleText() {
+        let button = document.getElementById("toggleButton");
+        
+        // Toggle class between 'btn-primary' and 'btn-danger'
+        if (button.classList.contains("btn-primary")) {
+            button.classList.replace("btn-primary", "btn-danger");
+            button.innerText = "Stop";
+
+            disableInputs(true);
+        } else {
+            button.classList.replace("btn-danger", "btn-primary");
+            button.innerText = "Start";
+            disableInputs(false);
+        }
+    }
+    
+    function getRoom_name(){
+        var rooms_data = document.getElementsByName("to_room_name");
+        var RoomAssign = [];
+
+        for (let index = 0; index < rooms_data.length; index++) {
+            const element = rooms_data[index];
+
+            if (element.checked) {
+                RoomAssign.push(element.value);
+            }
+        }
+        RoomAssign = RoomAssign.join(',');
+        return RoomAssign;
+    }
+    function disableInputs(data) {
+        // Select all input elements of type text and number
+        let inputs = document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], input[type="checkbox"], select, button');
+        
+        // Disable each selected input
+        if(data == true){
+            inputs.forEach(input => {
+                input.disabled = true
+                input.readonly = true
+            });
+
+            let barcodeValue = '';
+            var i = 0;
+            function barcodeScannerHandler(event) {
+                if (event.key === 'Enter') {
+                    console.log('Scanned Barcode:', barcodeValue);
+                    var output = getRoom_name();
+                    var warehouse_name = document.getElementById("warehouse_name").value;
+                    $.ajax({
+                    url: '/all_sales_finished/barcode_scanner_spmx', 
+                    method: 'POST',
+                    data: { product_code: barcodeValue, Roomslist: output, warehouse_name: warehouse_name }, 
+                    success: function(response) {
+                        
+                        $.each(response[0], function(index, data) {
+                            // console.log(data);
+                            let row = '';
+                            row += '<tr>';
+                            row += '<td><input type="text" class="form-control" style="width: 125px;" name="prod_code" value="' + data.product_code_spmx + '" readonly></td>';
+                            row += '<td><input type="text" class="form-control" style="width: 200px;" name="spicemix_spmx" id="spicemix_spmx'+ i +'" value="' + data.spicemix_spmx + '" readonly></td>';
+                            row += '<td><input type="number" class="form-control" style="width: 200px;" name="spicemix_spmx_qty_stock" id="spicemix_spmx_qty_stock'+ i +'" value="' + data.spicemix_spmx_qty + '" readonly></td>';
+                            row += '<td><input type="number" class="form-control" style="width: 200px;" name="spicemix_spmx_qty" id="spicemix_spmx_qty'+ i +'" value=""></td>';
+                            row += '<td><input type="text" class="form-control" style="width: 200px;" name="extenders_spmx" id="extenders_spmx'+ i +'" value="' + data.extenders_spmx + '" readonly></td>';
+                            row += '<td><input type="number" class="form-control" style="width: 200px;" name="extenders_spmx_qty_stock" id="extenders_spmx_qty_stock'+ i +'" value="' + data.extenders_spmx_qty + '" readonly></td>';
+                            row += '<td><input type="number" class="form-control" style="width: 200px;" name="extenders_spmx_qty" id="extenders_spmx_qty'+ i +'" value=""></td>';
+                            row += '<td><input type="text" class="form-control" style="width: 200px;" name="curing_spmx" id="curing_spmx'+ i +'" value="' + data.curing_spmx + '" readonly></td>';
+                            row += '<td><input type="number" class="form-control" style="width: 200px;" name="curing_spmx_qty_stock" id="curing_spmx_qty_stock'+ i +'" value="' + data.curing_spmx_qty + '" readonly></td>';
+                            row += '<td><input type="number" class="form-control" style="width: 200px;" name="curing_spmx_qty" id="curing_spmx_qty'+ i +'" value=""></td>';
+                            row += '<td><input type="text" class="form-control" style="width: 200px;" name="unit_spmx" id="unit_spmx'+ i +'" value="' + data.unit_spmx + '" readonly></td>';
+                            row += '<td><input type="text" class="form-control" style="width: 200px;" name="brand_spmx" id="brand_spmx'+ i +'" value="' + data.brand_spmx + '" readonly></td>';
+                            row += '<td><input type="text" class="form-control" style="width: 200px;" name="category_spmx" id="category_spmx'+ i +'" value="' + data.category_spmx + '" readonly></td>';
+                            row += '<td><input type="text" class="form-control" style="width: 200px;" name="room_spmx" id="room_spmx'+ i +'" value="'+data.roomNamed+'" readonly></td>';
+                            row += '<td><button type="button" class="btn btn-square btn-outline-danger" id="remove">Remove</button></td>';
+                            row += '<input type="hidden" name="out_going_id" id="out_going_id'+ i +'" value="'+data._id+'">';
+                            row += '<input type="hidden" name="incoming_invoice" id="incoming_invoice'+ i +'" value="'+data.inv_incoming+'">';
+                            row += '</tr>';
+                            $('#tblPage_new').append(row);
+                            i++;
+                        })
+                    }
+                    })
+                    barcodeValue = ''; // Reset for the next scan
+                } else {
+                    barcodeValue += event.key; // Append the character to barcode value
+                }
+            }
+
+            
+            document.addEventListener('keypress', barcodeScannerHandler);
+            document.barcodeScannerHandler = barcodeScannerHandler;
+        }else {
+            inputs.forEach(input => {
+                input.disabled = false
+                input.readonly = false
+            });
+       
+            if (document.barcodeScannerHandler) {
+                document.removeEventListener('keypress', document.barcodeScannerHandler);
+                delete document.barcodeScannerHandler;
+            }
+
+        }
+        
+    }
+
+    function removeSelfRow(event) {
+        var row = $(event.target).closest('tr');
+        
+        row.remove();
+    }
+
+    $(document).on('click', 'button#remove', function(event) {
+        removeSelfRow(event);
+    });
+
+    function dateExpiry(x){
+        $(function(){
+            var dtToday = new Date();
+            
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            var year = dtToday.getFullYear();
+            if(month < 10)
+                month = '0' + month.toString();
+            if(day < 10)
+                day = '0' + day.toString();
+            
+            var maxDate = year + '-' + month + '-' + day;
+            $('#expiry_date'+x).attr('min', maxDate);
+        });
+    }
+    
+$(document).ready(function() {
+    
+    var x=1;
+    var lastIncre = 0;
+
+    let barcodeValue = '';
+    $('#product_code').on('keypress', function(e) {
+        console.log(e.key)
+        if (e.key === "Enter"){
+            console.log('Scanned Barcode:', barcodeValue);
+            barcodeValue = '';
+        }else {
+            barcodeValue += event.key;
+        }
+    });
+});
+    </script>
+            <!--**********************************
+        Scripts end
+    ***********************************-->
+</body>
+
+</html>

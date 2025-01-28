@@ -97,11 +97,13 @@
 
                                                         <div class="col-xl-8">
                                                             <div class="row">
-                                                                <div class="mb-3 col-md-6">
+                                                                <!-- <div class="mb-3 col-md-6">
                                                                     <label class="form-label"><%= language.name %> <span class="text-red">*</span></label>
                                                                     <input type="text" placeholder="Name" class="form-control"
-                                                                        name="name" required>
-                                                                </div>
+                                                                        name="name"  required>
+                                                                </div> -->
+
+                                                                <input type="hidden" lass="form-control" name="name"  value="SPMX">
 
                                                                 <div class="mb-3 col-md-6">
                                                                     <label class="form-label"><%= language.category %> <span class="text-red">*</span></label>
@@ -112,11 +114,6 @@
                                                                         <% }) %>
                                                                     </select>
                                                                 </div>
-                                                                
-                                                            </div>
-
-
-                                                            <div class="row">
                                                                 <div class="mb-3 col-md-6">
                                                                     <label class="form-label"><%= language.brands %> <span class="text-red">*</span></label>
                                                                     <select class="form-control" name="brand" id="brand" required>
@@ -126,6 +123,12 @@
                                                                         <% }) %>
                                                                     </select>
                                                                 </div>
+                                                                
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                
 
                                                                 <!--<div class="mb-3 col-md-6">-->
                                                                 <!--    <label class="form-label"><%= language.sku %><span class="text-red">*</span></label>-->
@@ -138,11 +141,11 @@
                                                                 
                                                                 
                                                                 
-                                                                <div class="mb-2 col-md-6">
+                                                                <!-- <div class="mb-2 col-md-6">
                                                                     <label class="form-label"><%= language.alert_qty %></label>
                                                                     <input type="number" placeholder="Quantity" class="form-control"
                                                                         name="alertquantity">
-                                                                </div>
+                                                                </div> -->
 
                                                                 <div class="mb-3 col-md-6">
                                                                     <input type="hidden" class="form-control"
@@ -151,62 +154,46 @@
 
                                                             </div>
 
-                                                            <div class="row">
-                                                                 <div class="mb-3 col-md-6">
-                                                                    <label class="form-label"><%= language.units %> <span class="text-red">*</span></label>
-                                                                    <select class="form-control" name="unit" id="unit" onchange="ChangedLabel()" required>
-                                                                        <option value selected disabled>Select One</option>
-                                                                        <% units.forEach((units) => { %>
-                                                                            <option value="<%= units.name %>"><%= units.name %></option>
-                                                                        <% }) %>
-                                                                    </select>
-                                                                </div>
-                                                                
-                                                                
-                                                                 <div class="mb-3 col-md-6">
-                                                                    <label class="form-label">Secondary <%= language.units %> <span class="text-red">*</span></label>
-                                                                    <select class="form-control" name="second_unit" id="second_unit" onchange="ChangedLabel()" required>
-                                                                        <option value selected disabled>Select One</option>
-                                                                        <% units.forEach((units) => { %>
-                                                                            <option value="<%= units.name %>"><%= units.name %></option>
-                                                                        <% }) %>
-                                                                    </select>
-                                                                </div>
-
-                                                                
-                                                            </div>
+                                                            
 
                                                             <div class="row">
+
+                                                                <div class="mb-2 col-md-3">
+                                                                    <label class="form-label">Product Code</label>
+                                                                    <input type="text" placeholder="Product CODE" class="form-control"
+                                                                        name="product_code_spmx">
+                                                                </div>
                                                                 
                                                                 <div class="mb-2 col-md-3">
-                                                                    <label class="form-label">Primary Barcode</label>
-                                                                    <input type="text" placeholder="Primary Code" class="form-control"
+                                                                    <label class="form-label">SPICEMIX CODE</label>
+                                                                    <input type="text" placeholder="SPICEMIX CODE" class="form-control"
                                                                         name="primary_ItemCode">
                                                                 </div>
                                                                 
                                                                 
                                                                 <div class="mb-2 col-md-3">
-                                                                    <label class="form-label">Secondary Barcode</label>
-                                                                    <input type="text" placeholder="Secondary Code" class="form-control"
+                                                                    <label class="form-label">EXTENDERS CODE</label>
+                                                                    <input type="text" placeholder="EXTENDERS CODE" class="form-control"
                                                                         name="second_ItemCode">
                                                                 </div>
                                                                 
                                                                 <div class="mb-3 col-md-3">
-                                                                    <label class="form-label"><%= language.product_code %> / Item Code</label>
-                                                                    <input type="text" placeholder="Product Code" class="form-control" name="product_code" id="product_code1" required>
+                                                                    <label class="form-label">CURING SALT CODE</label>
+                                                                    <input type="text" placeholder="CURING SALT CODE" class="form-control" name="product_code" id="product_code1" required>
                                                                 </div>
-
-                                                                <div class="mb-3 col-md-3">
-                                                                    <label class="form-label">No. of <b id="maxPerSecunit"></b> per <b id="maxPerunit"></b></label>
-                                                                    <input type="text" placeholder="" class="form-control" name="maxPerUnit" id="maxPerUnit" required>
-                                                                </div>
-
-                                                                <div class="mb-3 col-md-3">
-                                                                    <label class="form-label">Maximum no. per pallet</label>
-                                                                    <input type="text" placeholder="" class="form-control" name="MaxPerProduct" id="MaxPerProduct" required>
-                                                                </div>
-
-
+                                                                
+                                                                <div class="row">
+                                                                    <div class="mb-3 col-md-6">
+                                                                       <label class="form-label"><%= language.units %> <span class="text-red">*</span></label>
+                                                                       <select class="form-control" name="unit" id="unit" onchange="ChangedLabel()" required>
+                                                                           <option value selected disabled>Select One</option>
+                                                                           <% units.forEach((units) => { %>
+                                                                               <option value="<%= units.name %>"><%= units.name %></option>
+                                                                           <% }) %>
+                                                                       </select>
+                                                                   </div>
+                                                                   
+                                                                   
                                                                 <div class="mb-3 col-md-3">
                                                                     <label class="form-label">Product Category</label>
                                                                     <% if (role.role == "admin") { %>
@@ -233,6 +220,9 @@
                                                                         
                                                                     <% } %>
                                                                 </div>
+   
+                                                                   
+                                                               </div>
 
 
                                                                 

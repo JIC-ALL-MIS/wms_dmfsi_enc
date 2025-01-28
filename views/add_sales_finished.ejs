@@ -1121,9 +1121,10 @@ $(document).ready(function() {
           // Populate the table with the received data
           $.each(response, function(index, data1) {
             data1.forEach((data) => {
-            if(data.product_stock > 0){
+                console.log(data.computeUsed, data.product_stock)
+            // if(data.product_stock > 0){
 
-                console.log(data.computeUsed)
+                
                 var Instock = data.product_stock;
                 var TotalQty = 0;
                 var theUnit ;
@@ -1262,7 +1263,7 @@ $(document).ready(function() {
                 x++;
 
                 
-            }
+            // }
          })    
           });
           

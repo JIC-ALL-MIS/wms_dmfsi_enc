@@ -207,8 +207,6 @@
                             <div class="container-fluid">
                                 <div class="card-header">
                                             <h4 class="card-title">Warehouse Map</h4>
-                                             
-                                         
                                 </div>
                                 
                                 <div class="card-header" style="display: flex; flex-direction: column; align-items: center;">
@@ -217,11 +215,31 @@
 
                                   <div class="mb-3 col-md-4">
                                     <label for="warrehouse">Category <span class="text-red">*</span> </label>
-                                    <select class="form-control" name="A" id="A" onchange="LogicDropdown()" required>
                                     
+
+
+                                    <% if (role.role == "admin") { %>
+                                      <select class="form-control" name="A" id="A" onchange="LogicDropdown()" required>
                                         <option value="raw" >Raw Materials</option>
                                         <option value="finish" >Finished Goods</option>
+                                        <option value="SPMX" >Spices / Mix</option>
                                     </select>
+                                  <% } else if (role.role == "staff") { %>
+                                      <% if (role.warehouse_category == "Raw Materials") { %>
+                                          <select class="form-control" name="A" id="A" onchange="LogicDropdown()" required>
+                                            <option value="raw" >Raw Materials</option>
+                                          </select>
+                                      <% } else if (role.warehouse_category == "Finished Goods") { %>
+                                          <select class="form-control" name="A" id="A" onchange="LogicDropdown()" required>
+                                            <option value="finish" >Finished Goods</option>
+                                          </select>
+                                      <% } else if (role.warehouse_category == "SPMX") { %>
+                                        <select class="form-control" name="A" id="A" onchange="LogicDropdown()" required>
+                                            <option value="SPMX" >Spices / Mix</option>
+                                          </select>
+                                      <% } %>
+                                      
+                                  <% } %>
                                   </div>
 
 
@@ -391,37 +409,19 @@
         var selectRoom = $('#warehouse');
         var A = document.getElementById("A");
         var BVal = document.getElementById("B").value;
-
+        console.log("dsjdjd", A.value)
           var CatVal = '';
           var IndiVal = '';
           if(A.value == "raw"){
-            // $.ajax({
-            //     url: '/warehousemap_Income/Rooms_data2', 
-            //     method: 'POST',
-            //     data: { cat: "Raw Materials" }, 
-            //     success: function(response) {
-
-                
-            //         selectRoom.empty();
-            //             $.each(response, function(index, data) {
-            //                 var roomName = data.room_name;
-            //                 var roomCode = data.room_name
-            //                 var option = $('<option>').text(roomName).val(roomName).attr('roomcode', roomCode);;
-            //                 selectRoom.append(option);
-
-
-            //             })
-            //             SelectRoom()
-            //     }
-            // })
-
             CatVal = "Raw Materials";
-            
-          }else{
+
+          }else if(A.value == "finish"){
             CatVal = "Finished Goods";
 
+          }else if(A.value == "SPMX"){
+            CatVal = "SPMX";
           }
-
+          
           $.ajax({
                 url: '/warehousemap_Income/Rooms_data2', 
                 method: 'POST',
@@ -680,7 +680,8 @@
           }else if(A.value == "finish"){
             B.innerHTML = "<option value='All'>All</option>"
             $("#LevelTpes").hide();
-            
+          }else if(A.value == "SPMX"){
+             B.innerHTML = "<option value='All'>All</option>"
           }
           SelectRoomSelect();
         }
@@ -714,9 +715,14 @@
         // Clear the existing table data
         dataBody.empty();
         // console.log(response)
-        const DataRes = jsonToArray(response);
-        // console.log(DataRes)
-        let dataIsle = [1,2,3,4,5, 6, 7,8];
+        if(A_value == "SPMX"){
+          var DataRes = response
+        }else{
+          var DataRes = jsonToArray(response);
+        }
+        
+        console.log(DataRes)
+        // let dataIsle = [1,2,3,4,5, 6, 7,8];
         switch(A_value){
           case "raw":
             if(B_value == "pack"){
@@ -4329,7 +4335,39 @@
           }
           break
           
+          case "SPMX":
+            
 
+            for (let index = 0; index <= DataRes.length-1; index++) {
+              const element = DataRes[index];
+              console.log(element)
+              dataItems += "<tr>";
+              dataItems += '<td style="width: 150px; height: 100px" class="text-center" rowspan="4"><b>'+element._id+'</b><td>';
+              
+              dataItems += "</tr>";
+
+
+              dataItems += "<tr>";
+                dataItems += '<td style="width: 150px; height: 100px" class="text-center" rowspan="1"><b>'+element.spicemix_spmx+'</b><td>';
+                dataItems += '<td style="width: 150px; height: 100px" class="text-center" rowspan="1"><b>'+element.spicemix_spmx_qty+ " " + element.unit_spmx +'</b><td>';
+              dataItems += "</tr>";
+
+              dataItems += "<tr>";
+                dataItems += '<td style="width: 150px; height: 100px" class="text-center" rowspan="1"><b>'+element.extenders_spmx+'</b><td>';
+                dataItems += '<td style="width: 150px; height: 100px" class="text-center" rowspan="1"><b>'+element.extenders_spmx_qty+ " " + element.unit_spmx +'</b><td>';
+              dataItems += "</tr>";
+              
+              dataItems += "<tr>";
+                dataItems += '<td style="width: 150px; height: 100px" class="text-center" rowspan="1"><b>'+element.curing_spmx+'<td>';
+                dataItems += '<td style="width: 150px; height: 100px" class="text-center" rowspan="1"><b>'+element.curing_spmx_qty+ " " + element.unit_spmx +'</b><td>';
+              dataItems += "</tr>";
+
+              
+            }
+            dataBody.append(dataItems);
+          // dataItems
+          // dataBody.append(dataItems);
+          break;
         }
         
         

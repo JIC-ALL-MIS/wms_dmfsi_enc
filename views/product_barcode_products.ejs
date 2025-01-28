@@ -103,10 +103,34 @@
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col-lg-4">
-                                                <select style="width: 150px;" class="form-control" id="product_category">
+                                                <!-- <select style="width: 150px;" class="form-control" id="product_category">
                                                     <option value="rm">Raw Materials</option>
                                                     <option value="fg">Finished Goods</option>
-                                                </select>
+                                                </select> -->
+
+                                                <% if (role.role == "admin") { %>
+                                                    <select style="width: 150px;" class="form-control" id="product_category">
+                                                        <option>Select</option>
+                                                        <option value="rm">Raw Materials</option>
+                                                        <option value="fg">Finished Goods</option>
+                                                        <option value="SPMX">SPICES / MIX</option>
+                                                    </select>
+                                                <% } else if (role.role == "staff") { %>
+                                                    <% if (role.warehouse_category == "Raw Materials") { %>
+                                                        <select style="width: 150px;" class="form-control" id="product_category">
+                                                            <option value="rm">Raw Materials</option>
+                                                        </select>
+                                                    <% } else if (role.warehouse_category == "Finished Goods") { %>
+                                                        <select style="width: 150px;" class="form-control" id="product_category">
+                                                            <option value="fg">Finished Goods</option>
+                                                        </select>
+                                                    <% } else if (role.warehouse_category == "SPMX") { %>
+                                                        <select style="width: 150px;" class="form-control" id="product_category">
+                                                            <option value="SPMX">SPICES / MIX</option>
+                                                        </select>
+                                                    <% } %>
+                                                    
+                                                <% } %>
                                             </div>
                                             
                                             <div class="col-lg-4">

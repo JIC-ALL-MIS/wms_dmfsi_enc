@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head'); -%>
+
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+        
+        /* The Modal (background) */
+        .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 3; /* Sit on top */
+          padding-top: 100px; /* Location of the box */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+        
+        /* Modal Content */
+        .modal-content {
+          position: relative;
+          background-color: #fefefe;
+          margin: auto;
+          padding: 0;
+          border: 1px solid #888;
+          width: 50%;
+          box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+          -webkit-animation-name: animatetop;
+          -webkit-animation-duration: 0.4s;
+          animation-name: animatetop;
+          animation-duration: 0.4s
+        }
+        
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+          from {top:-300px; opacity:0} 
+          to {top:0; opacity:1}
+        }
+        
+        @keyframes animatetop {
+          from {top:-300px; opacity:0}
+          to {top:0; opacity:1}
+        }
+        
+        /* The Close Button */
+        .close {
+          color: white;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        
+        .modal-header {
+          padding: 2px 16px;
+          background-color: rgba(34, 34, 51, 0.705);
+          color: white;
+        }
+        
+        .modal-body {padding: 2px 16px;}
+        
+        .modal-footer {
+          padding: 2px 16px;
+          background-color: rgba(34, 34, 51, 0.705);
+          color: white;
+          display: flex;
+          justify-content: center;
+          display: grid;
+            place-items: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <%- include('./partials/header_logo'); -%>
+
+            <!--**********************************
+            Nav header end
+        ***********************************-->
+
+            <!--**********************************
+            Header start
+        ***********************************-->
+            <%- include('./partials/header',{titel: language.purchase + " for Spices / Mix"}); -%>
+
+                <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+                <!--**********************************
+            Sidebar start
+        ***********************************-->
+                <%- include('./partials/sidebar'); -%>
+
+                    <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+                    <!--**********************************
+            Content body start
+        ***********************************-->
+                    <div class="content-body">
+                        <div class="container-fluid">
+
+                            <!-- row -->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title"><%= language.add_purchases %> </h4>
+                                            <button type="button" class="btn btn-rounded btn-outline-info"
+                                                onclick="history.back()"><i class="la la-undo"></i> <%= language.go_back %> </button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-validation">
+
+                                                <form class="needs-validation"
+                                                    action="/all_purchases_finished/view/add_purchases_spmx" method="post" id="form">
+
+                                                    <div class="row">
+                                                        <div class="col-xl-4">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">Document Number <span class="text-red">*</span></label>
+                                                                <input type="text" name="date" class="form-control" id="date" value="<%= data.invoice %>" disabled readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-4">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">Date received  <span
+                                                                        class="text-red">*</span></label>
+                                                                <input type="date" name="date" class="form-control" id="date" value="<%= data.date %>" disabled readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no"><%= language.warehouse %>  <span class="text-red">*</span></label>
+                                                                <input type="text" name="date" class="form-control" id="date" value="<%= data.warehouse_name %>" disabled readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-xl-6">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no"> Supplier/Client Ref Number <span
+                                                                        class="text-red"> *</span></label>
+                                                                <input type="text" name="SCRN" class="form-control" value="<%= data.SCRN %>" disabled readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">FTGS number</label>
+                                                                <input type="text" class="form-control" name="PO_number" id="PO_number" value="<%= data.POnumber %>" disabled readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <input type="hidden" id="choice-dropdown" value="Primary">
+
+
+                                                    <div class="col-xl-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table primary-table-bordered text-center" id="purchases_tbl_new">
+                                                                <thead class="thead-primary">
+                                                                    <tr>
+                                                                        <th scope="col">PRODUCT CODE </th>
+                                                                        <th scope="col">SPICEMIX CODE </th>
+                                                                        <th scope="col">QTY </th>
+                                                                        <th scope="col">EXTENDERS CODE </th>
+                                                                        <th scope="col">QTY </th>
+                                                                        <th scope="col">CURING SALT CODE </th>
+                                                                        <th scope="col">QTY </th>
+                                                                        <th scope="col">UNITS</th>
+                                                                        <th scope="col">BRAND </th>
+                                                                        <th scope="col">PRODUCT CATEGORY</th>
+                                                                        <!-- <th scope="col">PRODUCTION DATE </th>
+                                                                        <th scope="col">EXPIRATION DATE </th> -->
+                                                                        <th scope="col">ROOM</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="tblPage_new">
+                                                                    <% data.product.forEach(element => { %>
+                                                                        <tr>
+                                                                            <td><%= element.product_code %></td>
+                                                                            <td><%= element.spicemix_spmx %></td>
+                                                                            <td><%= element.spicemix_spmx_qty %></td>
+                                                                            <td><%= element.extenders_spmx %></td>
+                                                                            <td><%= element.extenders_spmx_qty %></td>
+                                                                            <td><%= element.curing_spmx %></td>
+                                                                            <td><%= element.curing_spmx_qty %></td>
+                                                                            <td><%= element.unit_spmx %></td>
+                                                                            <td><%= element.brand_spmx %></td>
+                                                                            <td><%= element.category_spmx %></td>
+                                                                            <td><%= element.room_spmx %></td>
+                                                                        </tr>
+                                                                    <% }) %>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                    <div class="row">
+                                                        <div class="col-md-8 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="note"><%= language.note %> </label>
+                                                                <input type="text" class="form-control" placeholder="note" id="note" name="note" value="<%= data.note %>" readonly disabled>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    
+                                                    </div>
+                                                </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div id="myModal" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <span class="close">&times;</span>
+                            <h2>Summary</h2>
+                          </div>
+                          <div class="modal-body">
+
+                            <table style="width:50%" >
+                                <thead>
+                                    <tr>
+                                        <td>Document Number:</td>
+                                        <td><b id="Inv"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Supplier/Client Ref Number:</td>
+                                        <td><b id="SRNC"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>PO number: </td>
+                                        <td><b id="PONumber"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Supplier:</td>
+                                        <td><b id="supplier"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Date received:</td>
+                                        <td><b id="dateRec"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Warehouse:</td>
+                                        <td><b id="houseware"></b></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Room:</td>
+                                        <td><b id="moor"></b></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                            
+                          </div>
+                          <div class="table-responsive">
+                            <table class="table primary-table-bordered" style="width:100%" id="purchases_tbl_modal">
+
+                            </table>
+                          </div>
+                          
+                          <div class="modal-footer">
+                            <button class="btn btn-primary" onclick="saveAndContinue()">Save and Continue</button>
+                          </div>
+                        </div>
+                      
+                    </div>
+                    <!--**********************************
+            Content body end
+        ***********************************-->
+
+                    <!--**********************************
+            Footer start
+        ***********************************-->
+                    <%- include('./partials/footer'); -%>
+
+                        <!--**********************************
+            Footer end
+        ***********************************-->
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!-- start Toastr -->
+    <%- include('./partials/toastr'); -%>
+        <!-- End Toastr -->
+
+        <!--**********************************
+        Scripts
+    ***********************************-->
+
+       
+        <%- include('./partials/script'); -%>
+            <!--**********************************
+        Scripts end
+    ***********************************-->
+</body>
+
+</html>
