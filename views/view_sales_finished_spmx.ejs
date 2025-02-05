@@ -270,7 +270,7 @@
                                                     
 
                                                     <div class="row">
-                                                        <div class="col-md-8 col-sm-6">
+                                                        <div class="col-md-12 col-sm-6">
                                                             <div class="form-group">
                                                                 <label for="note"><%= language.note %> </label>
                                                                 <input type="text" class="form-control"
@@ -279,6 +279,34 @@
                                                         </div>
                                                         
                                                     
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-xl-4">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">Requested By<span
+                                                                        class="text-red">*</span></label>
+                                                                <input type="text" name="req_by" class="form-control" id="req_by" value="<%= data.req_by %>" disabled>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-4">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">Approved By <span
+                                                                        class="text-red">*</span></label>
+                                                                <input type="text" name="app_by" class="form-control" id="app_by" value="<%= data.appr_by %>" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-xl-4">
+                                                            <div class="form-group">
+                                                                <label for="invoice_no">Received  By<span
+                                                                        class="text-red">*</span></label>
+                                                                <input type="text" name="rec_by" class="form-control" id="rec_by" value="<%= data.rec_by %>" disabled>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </form>
                                                 <% if (data.finalize == "False") { %>

@@ -273,25 +273,27 @@ function LogicDropdown(){
                     var actual_qty = element.product_details.actual_qty !== undefined ? element.product_details.actual_qty :"";
                     var actual_uom = element.product_details.actual_uom !== undefined ? element.product_details.actual_uom :"";
 
-                
-                    dataItem +='<tr>';
-                    dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_cat+'</h5></td>';
-                    dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_name +'</h5></td>';
-                    dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_room +'</h5></td>';
-                    dataItem +='<td class="text-nowrap" ><h5>'+ itemcode +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ itemdesc +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ primarycode +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ secondarycode +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ UOM +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ SndUOM +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ BatchCodes +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ productiondate +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ expirydate +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ element.product_details.product_stock.toFixed(3); +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ actual_qty +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ actual_uom +'</h5></td>';
-                    dataItem +='<td class="text-nowrap"><h5>'+ binlocation +'</h5></td>';
-                    dataItem +='</tr>';
+                    if(element.product_details.product_stock.toFixed(3) > 0){
+                      dataItem +='<tr>';
+                      dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_cat+'</h5></td>';
+                      dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_name +'</h5></td>';
+                      dataItem +='<td class="text-nowrap" ><h5>'+ warehouse_room +'</h5></td>';
+                      dataItem +='<td class="text-nowrap" ><h5>'+ itemcode +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ itemdesc +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ primarycode +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ secondarycode +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ UOM +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ SndUOM +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ BatchCodes +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ productiondate +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ expirydate +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ element.product_details.product_stock.toFixed(3); +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ actual_qty +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ actual_uom +'</h5></td>';
+                      dataItem +='<td class="text-nowrap"><h5>'+ binlocation +'</h5></td>';
+                      dataItem +='</tr>';
+                    }
+                    
                     
 
                 });
