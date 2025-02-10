@@ -168,6 +168,8 @@
                             dataString += "<thead>"; 
                             dataString += "<tr>"; 
                             dataString += "<th>PROCESS</th>";
+                            dataString += "<th>Document Number</th>"; 
+                            dataString += "<th>Date</th>"; 
                             dataString += "<th>PRODUCT CODE</th>"; 
                             dataString += "<th>SPICEMIX CODE</th>"; 
                             dataString += "<th>QTY</th>"; 
@@ -188,6 +190,8 @@
                                 const element = forData[index];
                                 dataString += "<tr>"; 
                                 dataString += "<td>"+ element.type_cat +"</td>"; 
+                                dataString += "<td>"+ element._id.invoice +"</td>"; 
+                                dataString += "<td>"+ element._id.date +"</td>"; 
                                 dataString += "<td>"+ element._id.product_code +"</td>"; 
                                 dataString += "<td>"+ element._id.spicemix_spmx +"</td>"; 
                                 dataString += "<td>"+ element.total_spicemix_spmx_qty +"</td>"; 
@@ -207,13 +211,15 @@
                                 const element = sales[index];
                                 dataString += "<tr>"; 
                                 dataString += "<td>"+ element.type_cat +"</td>"; 
+                                dataString += "<td>"+ element._id.invoice +"</td>"; 
+                                dataString += "<td>"+ element._id.date +"</td>"; 
                                 dataString += "<td>"+ element._id.product_code +"</td>"; 
                                 dataString += "<td>"+ element._id.spicemix_spmx +"</td>"; 
-                                dataString += "<td>"+ element.total_spicemix_spmx_qty +"</td>"; 
+                                dataString += "<td>-"+ element.total_spicemix_spmx_qty +"</td>"; 
                                 dataString += "<td>"+ element._id.extenders_spmx +"</td>"; 
-                                dataString += "<td>"+ element.total_extenders_spmx_qty +"</td>"; 
+                                dataString += "<td>-"+ element.total_extenders_spmx_qty +"</td>"; 
                                 dataString += "<td>"+ element._id.curing_spmx +"</td>"; 
-                                dataString += "<td>"+ element.total_curing_spmx_qty +"</td>"; 
+                                dataString += "<td>-"+ element.total_curing_spmx_qty +"</td>"; 
                                 dataString += "<td>"+ element.unit_spmx +"</td>"; 
                                 dataString += "<td>"+ element.warehouse_name +"</td>"; 
                                 
@@ -224,7 +230,7 @@
                             }
 
                             dataString += "<tr>"; 
-                            dataString += "<td colspan='3'>TOTAL</td>"; 
+                            dataString += "<td colspan='5'>TOTAL</td>"; 
                             dataString += "<td>"+spmx_total+"</td>";
                             dataString += "<td></td>";
                             dataString += "<td>"+ext_total+"</td>";
